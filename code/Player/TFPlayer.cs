@@ -459,24 +459,4 @@ public partial class TFPlayer : SDKPlayer
 		// Apply spy touched effects.
 		player.OnSpyTouchedWhileCloaked();
 	}
-
-	[ConCmd.Server("tf_invis")]
-	private static void Invis_Cmd()
-	{
-		var players = Entity.All.OfType<TFPlayer>();
-		foreach(var player in players)
-		{
-			bool invis = player.InCondition( TFCondition.Cloaked );
-			if(invis)
-			{
-				player.RemoveCondition( TFCondition.Cloaked );
-				Log.Info( "Removed invis" );
-			}
-			else
-			{
-				player.AddCondition( TFCondition.Cloaked );
-				Log.Info( "Added invis" );
-			}
-		}		
-	}
 }

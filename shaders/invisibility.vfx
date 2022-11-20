@@ -1,9 +1,8 @@
-HEADER
+﻿HEADER
 {
-	CompileTargets = ( IS_SM_50 && ( PC || VULKAN ) );
-	Description = "Invisibility Effect For TFS2";
+    CompileTargets = ( IS_SM_50 && ( PC || VULKAN ) );
+    Description = "Invisibility Effect For TFS2";
     Version = 1;
-    DevShader = true;
 }
 
 MODES
@@ -43,21 +42,22 @@ VS
     #include "common/vertex.hlsl"
 
     PixelInput MainVs( INSTANCED_SHADER_PARAMS( VS_INPUT i ) )
-	{
-		PixelInput o = ProcessVertex( i );
-		return FinalizeVertex( o );
-	}
+    {
+        PixelInput o = ProcessVertex( i );
+        return FinalizeVertex( o );
+    }
 }
 
 PS
 {
     #include "common/pixel.hlsl"
 
-	RenderState( DepthWriteEnable, true );
+    RenderState( DepthWriteEnable, true );
 
     float3 g_flBlurTint < UiType( Color ); Default3( 1.0, 1.0, 1.0 ); UiGroup( "TF:S2,10/Invis,10/1" );>;
     Float3Attribute(g_flBlurTint, g_flBlurTint);
 
+    //Main input to control the invisibility effect
     float g_InvisBlend < Default( 1.0 ); Range( 0, 1 ); UiGroup( "TF:S2,10/Invis,10/1" );>;
     FloatAttribute(g_InvisBlend, g_InvisBlend);
 
@@ -66,6 +66,7 @@ PS
 
     float g_flBlurAmount< Default( 10.0f ); Range( 0.0f, 32.0f ); UiGroup( "TF:S2,10/Invis,10/1" ); >;
 
+    //Get frame buffer texture, may just break in future ¯\_(ツ)_/¯
     BoolAttribute( bWantsFBCopyTexture, true );
     CreateTexture2D( g_tFrameBufferCopyTexture ) < Attribute( "FrameBufferCopyTexture" ); SrgbRead( true ); Filter( MIN_MAG_MIP_LINEAR ); AddressU( CLAMP ); AddressV( CLAMP ); >;
     
@@ -97,14 +98,14 @@ PS
         return color;
     }
 
-	float4 MainPs( PixelInput i ) : SV_Target0
-	{
-		Material material = GatherMaterial(i);
+    float4 MainPs( PixelInput i ) : SV_Target0
+    {
+        Material material = GatherMaterial(i);
 
         float3 vPositionWs = i.vPositionWithOffsetWs.xyz;
 
         ShadingModelValveStandard shading;
-		float4 o = FinalizePixelMaterial( i, material, shading );
+        float4 o = FinalizePixelMaterial( i, material, shading );
 
         float2 vPositionUv = ScreenspaceCorrectionMultiview( CalculateViewportUv( i.vPositionSs ) );
         float3 vFbColor = Tex2D( g_tFrameBufferCopyTexture, vPositionUv ).rgb;
@@ -113,15 +114,18 @@ PS
 
         float normalDot = dot(normalize(i.vNormalWs), -normalize(g_vCameraDirWs));
 
+        //Point where blur fade ends and blur to fully invisible begins.
         float g_flFadePoint = 0.5f;
+
         float fadeMul = 1.0f / g_flFadePoint;
 
-        //Blend value for blur from 0 to 1:
+        //Make blur val be from 0-1
         float blurBlend = (g_InvisBlend - g_flFadePoint) * fadeMul;
         float steppedBlurLerp = saturate(smoothstep(blurBlend - min(g_SmoothStep, min(blurBlend, 1.0f - blurBlend)), blurBlend, normalDot));
 
+        //Show either the normal to blur colour, or the blur to fully invis colour.
         o.rgb = g_InvisBlend >= g_flFadePoint ? lerp(o.rgb, blur, steppedBlurLerp) : lerp(vFbColor, blur, g_InvisBlend * fadeMul);
 
         return o;
-	}
+    }
 }

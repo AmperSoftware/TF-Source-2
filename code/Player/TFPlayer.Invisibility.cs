@@ -1,6 +1,7 @@
 ﻿using Amper.FPS;
 using Sandbox;
 using System;
+using System.Linq;
 
 namespace TFS2;
 
@@ -110,4 +111,31 @@ partial class TFPlayer
 			}
 		}
 	}
+
+#if DEBUG
+	/// <summary>
+	/// Test command to toggle invisibility on all players
+	/// </summary>
+	[ConCmd.Admin("tf_test_invis")]
+    private static void Invis_Cmd()
+    {
+        var players = Entity.All.OfType<TFPlayer>();
+        foreach (var player in players)
+        {
+			if (PlayerClass.Entries[player.PlayerClass.Title] != TFPlayerClass.Spy) continue;
+
+            bool invis = player.InCondition(TFCondition.Cloaked);
+            if (invis)
+            {
+                player.RemoveCondition(TFCondition.Cloaked);
+                Log.Info("Removed invis");
+            }
+            else
+            {
+                player.AddCondition(TFCondition.Cloaked);
+                Log.Info("Added invis");
+            }
+        }
+    }
+#endif
 }

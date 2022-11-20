@@ -7972,7 +7972,7 @@
 						[
 							{
 								from = "materials/models/player/spy/spy_head_red.vmat"
-								to = "materials/models/player/spy/spy_head_red.vmat"
+								to = "materials/models/player/spy/spy_head_red_invis.vmat"
 							},
 							{
 								from = "materials/models/player/spy/eyeball_l.vmat"
@@ -8000,7 +8000,7 @@
 						[
 							{
 								from = "materials/models/player/spy/spy_head_red.vmat"
-								to = "materials/models/player/spy/spy_head_blue.vmat"
+								to = "materials/models/player/spy/spy_head_blue_invis.vmat"
 							},
 							{
 								from = "materials/models/player/spy/eyeball_l.vmat"
