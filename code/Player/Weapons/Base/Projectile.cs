@@ -32,7 +32,7 @@ public partial class TFProjectile : Projectile
 		CriticalTrail?.Destroy( immediate );
 	}
 
-	public virtual bool CanDeflect( TFWeaponBase weapon, TFPlayer player ) => false;
+	public virtual bool CanBeDeflected => true;
 
 	public const string DeflectedSound = "weapon_flamethrower.reflect_projectile";
 	public const string DeflectedEffect = "particles/rocketjumptrail/deflect_fx.vpcf";

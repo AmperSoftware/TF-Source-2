@@ -15,7 +15,7 @@ partial class Syringe : TFProjectile
 		Gravity = .3f;
 	}
 
-	public override bool CanDeflect( TFWeaponBase weapon, TFPlayer player ) => false;
+	public override bool CanBeDeflected => false;
 
 	public override void OnTraceTouch( Entity other, TraceResult trace )
 	{

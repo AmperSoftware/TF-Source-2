@@ -25,7 +25,7 @@ public partial class FlameEntity : TFProjectile
 		AutoDestroyTime = tf_flamethrower_flametime;
 	}
 
-	public override bool CanDeflect( TFWeaponBase weapon, TFPlayer player ) => false;
+	public override bool CanBeDeflected => false;
 
 	public override void OnInitialized()
 	{

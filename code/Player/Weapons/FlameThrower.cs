@@ -260,7 +260,7 @@ partial class FlameThrower : TFHoldWeaponBase
 			// If entity is a player.
 			if ( ent is TFProjectile entProjectile )
 			{
-				DeflectProjectile( entProjectile, forward, center, size );
+				TryDeflectProjectile( entProjectile, forward, center, size );
 			}
 		}
 
@@ -271,10 +271,13 @@ partial class FlameThrower : TFHoldWeaponBase
 	public const string AirblastPlayerImpactSound = "player.airblast_impact";
 	const float AirblastDeflectTraceRange = 2048;
 
-	public bool DeflectProjectile( TFProjectile target, Vector3 forward, Vector3 center, Vector3 size )
+	public bool TryDeflectProjectile( TFProjectile target, Vector3 forward, Vector3 center, Vector3 size )
 	{
 		// Can't deflect our team's stuff.
 		if ( target.Team == Team )
+			return false;
+
+		if ( !target.CanBeDeflected )
 			return false;
 
 		var curSpeed = target.Velocity.Length;
