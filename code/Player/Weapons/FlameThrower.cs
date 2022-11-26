@@ -273,11 +273,8 @@ partial class FlameThrower : TFHoldWeaponBase
 
 	public bool TryDeflectProjectile( TFProjectile target, Vector3 forward, Vector3 center, Vector3 size )
 	{
-		// Can't deflect our team's stuff.
-		if ( target.Team == Team )
-			return false;
-
-		if ( !target.CanBeDeflected )
+		// Can't deflect our team's stuff. Some projectiles cannot be deflected at all (ex. syringes and flames)
+		if ( target.Team == Team || !target.CanBeDeflected )
 			return false;
 
 		var curSpeed = target.Velocity.Length;
