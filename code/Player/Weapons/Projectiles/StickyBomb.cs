@@ -7,6 +7,15 @@ public partial class StickyBomb : TFProjectile
 {
 	[Net] public bool IsDeployed { get; set; }
 
+	[Net] public float TimeUntilRestick { get; set; }
+	[Net] public float TimeUntilDeflectReset { get; set; }
+
+	/// <summary>
+	/// How long after being detached will we re-stick to the world.
+	/// </summary>
+	[ConVar.Replicated] public static float tf_grenade_force_sleeptime { get; set; } = 1.0f;
+	[ConVar.Replicated] public static float tf_pipebomb_deflect_reset_time { get; set; } = 10.0f;
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -15,6 +24,7 @@ public partial class StickyBomb : TFProjectile
 
 		MoveType = ProjectileMoveType.Physics;
 		DamageFlags |= DamageFlags.Blast;
+		FaceVelocity = false;
 		AutoDestroyTime = null;
 	}
 
@@ -30,7 +40,30 @@ public partial class StickyBomb : TFProjectile
 	public bool CanStickOnEntity( Entity entity )
 	{
 		// Only allow sticking to walls for now.
-		return entity.IsWorld;
+		return entity.IsWorld && TimeUntilRestick < Time.Now;
+	}
+
+	public override void Deflected( DeflectingContext ctx )
+	{
+		const int DeflectionForce = 500;
+
+		ctx.ShouldChangeTeam = false;
+		ctx.ShouldApplyBoost = false;
+
+		if ( MoveType == ProjectileMoveType.None || TimeUntilRestick != 0 )
+		{
+			// The sticky bomb has touched a surface at least once, let's apply velocity manually
+			MoveType = ProjectileMoveType.Physics;
+
+			var vecDir = WorldSpaceBounds.Center - ctx.Who.WorldSpaceBounds.Center;
+			vecDir = vecDir.Normal;
+			PhysicsBody.Velocity = vecDir * DeflectionForce;
+		}
+
+		TimeUntilRestick = Time.Now + tf_grenade_force_sleeptime;
+		TimeUntilDeflectReset = Time.Now + tf_pipebomb_deflect_reset_time;
+
+		base.Deflected( ctx );
 	}
 
 	public override void TakeDamage( DamageInfo info )
@@ -49,6 +82,12 @@ public partial class StickyBomb : TFProjectile
 		if ( !IsDeployed && TimeSinceCreated > GetDeployTime() )
 		{
 			OnDeployed();
+		}
+
+		if ( Owner != OriginalOwner && TimeUntilDeflectReset < Time.Now )
+		{
+			Owner = OriginalOwner;
+			Launcher = OriginalLauncher;
 		}
 	}
 
