@@ -14,8 +14,8 @@
 						remaps = 
 						[
 							{
-								from = "models/weapons/v_scattergun/v_scattergun.vmat"
-								to = "materials/models/weapons/v_scattergun/v_scattergun.vmat"
+								from = "c_scattergun.vmat"
+								to = "materials/models/weapons/c_models/c_scattergun/c_scattergun.vmat"
 							},
 						]
 						use_global_default = false
@@ -70,7 +70,7 @@
 								parent_bone = "bip_hand_r"
 								surface_property = "default"
 								translation_only = false
-								group_id = 0
+								tags = ""
 								hitbox_mins = [ -1.35, -0.51, -2.3 ]
 								hitbox_maxs = [ 3.03, 7.58, 4.49 ]
 							},
@@ -79,7 +79,7 @@
 								parent_bone = "bip_hand_l"
 								surface_property = "default"
 								translation_only = false
-								group_id = 0
+								tags = ""
 								hitbox_mins = [ -2.5, -7.58, -4.49 ]
 								hitbox_maxs = [ 1.5, 0.55, 2.3 ]
 							},
@@ -88,7 +88,7 @@
 								parent_bone = "weapon_bone"
 								surface_property = "default"
 								translation_only = false
-								group_id = 0
+								tags = ""
 								hitbox_mins = [ -2.45, 0.27, -6.69 ]
 								hitbox_maxs = [ 2.55, 5.27, 22.99 ]
 							},
@@ -103,7 +103,7 @@
 					{
 						_class = "RenderMeshFile"
 						name = "v_scattergun"
-						filename = "models/weapons/v_models/v_scattergun_scout/v_scattergun_scout.dmx"
+						filename = "models/weapons/v_models/v_scattergun_scout/v_scattergun_scout.smd"
 						import_translation = [ 0.0, 0.0, 0.0 ]
 						import_rotation = [ 0.0, 0.0, 0.0 ]
 						import_scale = 1.0
@@ -141,7 +141,7 @@
 								}
 							},
 						]
-						activity_name = "ACT_VM_DRAW"
+						activity_name = "ACT_PRIMARY_VM_DRAW"
 						activity_weight = 1
 						weight_list_name = ""
 						fade_in_time = 0.2
@@ -152,7 +152,7 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "models/weapons/v_models/v_scattergun_scout/anims/draw.smd"
+						source_filename = "models/weapons/arms/c_scout_arms/anims/sg_draw.dmx"
 						start_frame = -1
 						end_frame = -1
 						framerate = 30.0
@@ -162,7 +162,7 @@
 					{
 						_class = "AnimFile"
 						name = "idle"
-						activity_name = "ACT_VM_IDLE"
+						activity_name = "ACT_PRIMARY_VM_IDLE"
 						activity_weight = 1
 						weight_list_name = ""
 						fade_in_time = 0.2
@@ -173,7 +173,7 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "models/weapons/v_models/v_scattergun_scout/anims/idle.smd"
+						source_filename = "models/weapons/arms/c_scout_arms/anims/sg_idle.dmx"
 						start_frame = -1
 						end_frame = -1
 						framerate = 30.0
@@ -183,7 +183,7 @@
 					{
 						_class = "AnimFile"
 						name = "fire"
-						activity_name = "ACT_VM_PRIMARYATTACK"
+						activity_name = "ACT_PRIMARY_VM_PRIMARYATTACK"
 						activity_weight = 1
 						weight_list_name = ""
 						fade_in_time = 0.1
@@ -194,7 +194,7 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "models/weapons/v_models/v_scattergun_scout/anims/fire.smd"
+						source_filename = "models/weapons/arms/c_scout_arms/anims/sg_fire.dmx"
 						start_frame = -1
 						end_frame = -1
 						framerate = 30.0
@@ -204,7 +204,7 @@
 					{
 						_class = "AnimFile"
 						name = "reload_start"
-						activity_name = "ACT_RELOAD_START"
+						activity_name = "ACT_PRIMARY_RELOAD_START"
 						activity_weight = 1
 						weight_list_name = ""
 						fade_in_time = 0.1
@@ -215,7 +215,7 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "models/weapons/v_models/v_scattergun_scout/anims/reload_start.smd"
+						source_filename = "models/weapons/arms/c_scout_arms/anims/sg_reload_start.dmx"
 						start_frame = -1
 						end_frame = -1
 						framerate = 30.0
@@ -246,7 +246,7 @@
 								event_keys = null
 							},
 						]
-						activity_name = "ACT_VM_RELOAD"
+						activity_name = "ACT_PRIMARY_VM_RELOAD"
 						activity_weight = 1
 						weight_list_name = ""
 						fade_in_time = 0.1
@@ -257,7 +257,7 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "models/weapons/v_models/v_scattergun_scout/anims/reload_loop.smd"
+						source_filename = "models/weapons/arms/c_scout_arms/anims/sg_reload_loop.dmx"
 						start_frame = -1
 						end_frame = -1
 						framerate = 30.0
@@ -267,7 +267,7 @@
 					{
 						_class = "AnimFile"
 						name = "reload_end"
-						activity_name = "ACT_RELOAD_FINISH"
+						activity_name = "ACT_PRIMARY_RELOAD_FINISH"
 						activity_weight = 1
 						weight_list_name = ""
 						fade_in_time = 0.1
@@ -278,10 +278,115 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "models/weapons/v_models/v_scattergun_scout/anims/reload_end.smd"
+						source_filename = "models/weapons/arms/c_scout_arms/anims/sg_reload_end.dmx"
 						start_frame = -1
 						end_frame = -1
 						framerate = 26.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "inspect_start"
+						children = 
+						[
+							{
+								_class = "AnimEvent"
+								event_class = "AE_CL_PLAYSOUND"
+								event_frame = 1
+								event_keys = 
+								{
+									name = "WeaponInspect.Movement4"
+									stop_on_seq_change = false
+									use_layer_sequence = false
+									tags = ""
+								}
+							},
+						]
+						activity_name = "ACT_PRIMARY_VM_INSPECT_START"
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = false
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						source_filename = "models/weapons/arms/c_scout_arms/anims/primary_inspect_start.dmx"
+						start_frame = -1
+						end_frame = -1
+						framerate = 35.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "inspect_idle"
+						activity_name = "ACT_PRIMARY_VM_INSPECT_IDLE"
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						source_filename = "models/weapons/arms/c_scout_arms/anims/primary_inspect_idle.dmx"
+						start_frame = -1
+						end_frame = -1
+						framerate = 30.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "inspect_end"
+						children = 
+						[
+							{
+								_class = "AnimEvent"
+								event_class = "AE_CL_PLAYSOUND"
+								event_frame = 4
+								event_keys = 
+								{
+									name = "WeaponInspect.Movement3"
+									stop_on_seq_change = false
+									use_layer_sequence = false
+									tags = ""
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_CL_PLAYSOUND"
+								event_frame = 70
+								event_keys = 
+								{
+									name = "WeaponInspect.Movement2"
+									stop_on_seq_change = false
+									use_layer_sequence = false
+									tags = ""
+								}
+							},
+						]
+						activity_name = "ACT_PRIMARY_VM_INSPECT_END"
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = false
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						source_filename = "models/weapons/arms/c_scout_arms/anims/primary_inspect_end.dmx"
+						start_frame = -1
+						end_frame = -1
+						framerate = 30.0
 						take = 0
 						reverse = false
 					},
@@ -306,6 +411,7 @@
 		model_archetype = ""
 		primary_associated_entity = ""
 		anim_graph_name = "models/weapons/v_models/animgraphs/shotgun.vanmgrph"
+		base_model_name = ""
 		importer_notes = """
 Imported from compiled VMDL_C
 """
