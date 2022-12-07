@@ -64,6 +64,9 @@ namespace TFS2
 
 		protected override void PostLoad()
 		{
+			if ( _all.Contains( this ) )
+				return;
+
 			_all.Add( this );
 		}
 	}
