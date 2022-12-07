@@ -18,10 +18,13 @@ partial class TFChatBox : Panel
 	Panel SwitchGlyph { get; set; }
 	ChatType Type { get; set; }
 
-	public TFChatBox()
+	public TFChatBox() => Instance = this;
+
+	[Event.BuildInput]
+	public void ProcessClientInput()
 	{
-		Instance = this;
-		Sandbox.Hooks.Chat.OnOpenChat += () => Open();
+		if ( Input.Pressed( InputButton.Chat ) )
+			Open();
 	}
 
 	protected override void PostTemplateApplied()

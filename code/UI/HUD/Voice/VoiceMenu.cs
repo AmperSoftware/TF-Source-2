@@ -134,21 +134,21 @@ public partial class VoiceMenu : Panel
 
 	public void Show( int menu = 0 )
 	{
-		InfoContainer.SetClass("visible", Input.GetButtonOrigin(InputButton.View) != null);
+		InfoContainer.SetClass( "visible", Input.GetButtonOrigin( InputButton.View ) != null );
 		Shown = true;
 		AddClass( "visible" );
 		SwitchToPage( menu );
 	}
 
-	public void Toggle(int menu = 0)
+	public void Toggle( int menu = 0 )
 	{
 		// If we're trying to open the currently active page...
-		if (Shown && ActivePage == menu)
+		if ( Shown && ActivePage == menu )
 			Close(); // just close the menu.
 		else
-			Show(menu);
+			Show( menu );
 	}
-	
+
 	public void NextPage()
 	{
 		if ( !Shown )
@@ -185,28 +185,28 @@ public partial class VoiceMenu : Panel
 	}
 
 	[Event.BuildInput]
-	public void BuildInput( InputBuilder builder )
+	public void ProcessClientInput()
 	{
-		if ( builder.Pressed( InputButton.View ) )
+		if ( Input.Pressed( InputButton.View ) )
 			NextPage();
 
 		if ( !Shown )
 			return;
 
 		// If we've pressed Slot0 close the menu right away, this button means cancel.
-		if ( builder.Pressed( InputButton.Slot0 ) )
+		if ( Input.Pressed( InputButton.Slot0 ) )
 		{
-			builder.SuppressButton( InputButton.Slot0 );
+			Input.SuppressButton( InputButton.Slot0 );
 			Close();
 			return;
 		}
 
 		foreach ( var pair in SlotButtons )
 		{
-			if ( builder.Pressed( pair.Key ) )
+			if ( Input.Pressed( pair.Key ) )
 			{
 				ButtonPressed( pair.Key );
-				builder.SuppressButton( pair.Key );
+				Input.SuppressButton( pair.Key );
 			}
 		}
 	}

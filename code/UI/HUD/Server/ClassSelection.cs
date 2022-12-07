@@ -299,9 +299,9 @@ public class ClassSelectionButton : Label
 	}
 
 	[Event.BuildInput]
-	public void Input( InputBuilder input )
+	public void ProcessClientInput()
 	{
-		if ( input.Pressed( GetShortcutButton() ) )
+		if ( Input.Pressed( GetShortcutButton() ) )
 			HandleClick();
 	}
 

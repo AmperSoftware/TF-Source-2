@@ -81,6 +81,8 @@ public class PlayerClass : GameResource
 	public PlayerClassAbilities Abilities { get; set; }
 	public struct PlayerClassAbilities
 	{
+		public PlayerClassAbilities() { }
+
 		/// <summary>
 		/// How many jumps mid-air this class will be able to perform?
 		/// </summary>
@@ -112,20 +114,20 @@ public class PlayerClass : GameResource
 		/// <summary>
 		/// Multiplier for the damage that this class will be taking from blasts, invoked by owned weapons.
 		/// </summary>
-		[DefaultValue( 1 )] public float BlastJumpDamageMultiplier { get; set; }
+		public float BlastJumpDamageMultiplier { get; set; } = 1;
 		/// <summary>
 		/// How much we scale our blast force, calculated from damage while being airborne.
 		/// </summary>
-		[DefaultValue( 9 )] public float BlastJumpForceScale { get; set; }
+		public float BlastJumpForceScale { get; set; } = 9;
 		/// <summary>
 		/// How much we scale our blast force, calculated from damage while we are on the ground at the moment of 
 		/// explosion.
 		/// </summary>
-		[DefaultValue( 9 )] public float BlastJumpForceScaleGrounded { get; set; }
+		public float BlastJumpForceScaleGrounded { get; set; } = 9;
 		/// <summary>
 		/// How much should resist to being pushed by weapon damage.
 		/// </summary>
-		[DefaultValue( 1 )] public float DamagePushResistance { get; set; }
+		public float DamagePushResistance { get; set; } = 1;
 		[HideInEditor] public bool HasMetal => Metal > 0;
 	}
 
@@ -209,7 +211,7 @@ public class PlayerClass : GameResource
 	{
 		name = name.ToLower();
 
-		if ( !IsValid( name ) ) 
+		if ( !IsValid( name ) )
 			return null;
 
 		return All[name];
@@ -218,7 +220,7 @@ public class PlayerClass : GameResource
 	public static PlayerClass Get( TFPlayerClass pclass )
 	{
 		string name = Names[pclass];
-		if ( !IsValid( name ) ) 
+		if ( !IsValid( name ) )
 			return null;
 
 		return All[name];

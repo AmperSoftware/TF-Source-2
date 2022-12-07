@@ -140,9 +140,8 @@ partial class WeaponSelection : Panel
 	/// <summary>
 	/// Processes user input while weapon selection is active.
 	/// </summary>
-	/// <param name="input"></param>
 	[Event.BuildInput]
-	public void ProcessClientInput( InputBuilder input )
+	public void ProcessClientInput()
 	{
 		var player = TFPlayer.LocalPlayer;
 		if ( !player.IsValid() )
@@ -169,9 +168,9 @@ partial class WeaponSelection : Panel
 			if ( TimeSinceInteraction > .02f )
 			{
 				// If we have any mouse wheel input.
-				if ( input.MouseWheel != 0 )
+				if ( Input.MouseWheel != 0 )
 				{
-					var delta = -input.MouseWheel;
+					var delta = -Input.MouseWheel;
 					for ( int i = 0; i < slotsCount; i++ )
 					{
 						// Go through all the slots in the direction of delta and find any eligible weapons we can equip.
@@ -200,12 +199,12 @@ partial class WeaponSelection : Panel
 		//
 		// Keyboard Switch
 		//
-		if ( input.Pressed( InputButton.Slot1 ) ) SelectSlot( TFWeaponSlot.Primary );
-		if ( input.Pressed( InputButton.Slot2 ) ) SelectSlot( TFWeaponSlot.Secondary );
-		if ( input.Pressed( InputButton.Slot3 ) ) SelectSlot( TFWeaponSlot.Melee );
-		if ( input.Pressed( InputButton.Slot4 ) ) SelectSlot( TFWeaponSlot.PDA );
-		if ( input.Pressed( InputButton.Slot5 ) ) SelectSlot( TFWeaponSlot.PDA2 );
-		if ( input.Pressed( InputButton.Slot6 ) ) SelectSlot( TFWeaponSlot.Action );
+		if ( Input.Pressed( InputButton.Slot1 ) ) SelectSlot( TFWeaponSlot.Primary );
+		if ( Input.Pressed( InputButton.Slot2 ) ) SelectSlot( TFWeaponSlot.Secondary );
+		if ( Input.Pressed( InputButton.Slot3 ) ) SelectSlot( TFWeaponSlot.Melee );
+		if ( Input.Pressed( InputButton.Slot4 ) ) SelectSlot( TFWeaponSlot.PDA );
+		if ( Input.Pressed( InputButton.Slot5 ) ) SelectSlot( TFWeaponSlot.PDA2 );
+		if ( Input.Pressed( InputButton.Slot6 ) ) SelectSlot( TFWeaponSlot.Action );
 
 		/*
 		// NO SLOTS THAT CAN THEORETICALLY USE THIS YET, SO DON'T NEED TO CHECK.
@@ -229,7 +228,7 @@ partial class WeaponSelection : Panel
 			// Otherwise see if weapon list menu is both visible and we're pressing attack to confirm.
 			if ( IsEnabled )
 			{
-				if ( input.Pressed( InputButton.PrimaryAttack ) )
+				if ( Input.Pressed( InputButton.PrimaryAttack ) )
 				{
 					confirmChoice = true;
 					AttackInputHeld = true;
@@ -239,8 +238,8 @@ partial class WeaponSelection : Panel
 			// Don't allow player to use attack button if they press it to confirm selection and didn't release since then.
 			if ( AttackInputHeld )
 			{
-				if ( input.Down( InputButton.PrimaryAttack ) )
-					input.SetButton( InputButton.PrimaryAttack, false );
+				if ( Input.Down( InputButton.PrimaryAttack ) )
+					Input.SetButton( InputButton.PrimaryAttack, false );
 				else
 					AttackInputHeld = false;
 			}
@@ -252,7 +251,7 @@ partial class WeaponSelection : Panel
 			if ( weapon.IsValid() )
 			{
 				if ( weapon != player.ActiveWeapon )
-					input.ActiveChild = weapon;
+					Input.ActiveChild = weapon;
 			}
 
 			Close();

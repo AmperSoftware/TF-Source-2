@@ -227,12 +227,12 @@ public class TeamSelectionButton : Label
 	}
 
 	[Event.BuildInput]
-	public void Input( InputBuilder input )
+	public void ProcessClientInput()
 	{
 		if ( Local.Pawn is not TFPlayer player )
 			return;
 
-		if ( input.Pressed( Shortcut ) )
+		if ( Input.Pressed( Shortcut ) )
 			HandleClick();
 	}
 }

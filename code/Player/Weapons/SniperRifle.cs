@@ -183,11 +183,11 @@ partial class SniperRifle : TFWeaponBase
 		}
 	}
 
-	public override void BuildInput( InputBuilder input )
+	public override void BuildInput()
 	{
-		if ( IsZoomed ) 
+		if ( IsZoomed )
 		{
-			input.AnalogLook *= tf_sniperrifle_zoom_sensitivity;
+			Input.AnalogLook *= tf_sniperrifle_zoom_sensitivity;
 		}
 	}
 
@@ -238,7 +238,7 @@ partial class SniperRifle : TFWeaponBase
 		return WillAutoZoomIn && CanAutoZoom();
 	}
 
-	protected override void DebugScreenText(float interval)
+	protected override void DebugScreenText( float interval )
 	{
 		DebugOverlay.ScreenText(
 			$"[SNIPER RIFLE]\n" +
@@ -300,7 +300,7 @@ partial class SniperRifle : TFWeaponBase
 		if ( entity is not TFPlayer )
 			return false;
 
-		return hitBox.HasTag("head");
+		return hitBox.HasTag( "head" );
 	}
 
 	public bool CanAutoZoom()

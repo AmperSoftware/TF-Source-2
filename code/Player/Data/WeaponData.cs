@@ -51,8 +51,7 @@ public class WeaponData : GameResource
 	/// <summary>
 	/// Maximum range of this weapon.
 	/// </summary>
-	[DefaultValue( 4096 )]
-	public int Range { get; set; }
+	public int Range { get; set; } = 4096;
 	/// <summary>
 	/// Amount of bullets that can fit inside the clip of this weapon.
 	/// </summary>
@@ -72,8 +71,7 @@ public class WeaponData : GameResource
 	/// <summary>
 	/// How much ammo is consumed by one attack.
 	/// </summary>
-	[DefaultValue( 1 )]
-	public int AmmoPerShot { get; set; }
+	public int AmmoPerShot { get; set; } = 1;
 	/// <summary>
 	/// This defines how this weapon will be reloaded.
 	/// </summary>
@@ -87,30 +85,26 @@ public class WeaponData : GameResource
 	/// Damage Falloff mechanic: Apply damage decrease at far range.<br/>
 	/// <i><b>Note: Melee weapons never use distance mod, regardless of this setting.</b></i>
 	/// </summary>
-	[DefaultValue( true )]
 	[Category( "Distance Mod" )]
-	public bool UseFalloff { get; set; }
+	public bool UseFalloff { get; set; } = true;
 	/// <summary>
 	/// Maximum far range damage decrease. Default: 50%.<br/>
 	/// <i><b>Note: Melee weapons never use distance mod, regardless of this setting.</b></i>
 	/// </summary>
-	[DefaultValue( .5f )]
 	[Category( "Distance Mod" )]
-	public float FalloffMultiplier { get; set; }
+	public float FalloffMultiplier { get; set; } = .5f;
 	/// <summary>
 	/// Damage Rampup mechanic: Apply damage increase at close range.<br/>
 	/// <i><b>Note: Melee weapons never use distance mod, regardless of this setting.</b></i>
 	/// </summary>
-	[DefaultValue( true )]
 	[Category( "Distance Mod" )]
-	public bool UseRampup { get; set; }
+	public bool UseRampup { get; set; } = true;
 	/// <summary>
 	/// Maximum close range damage increase. Default: 150%.<br/>
 	/// <i><b>Note: Melee weapons never use distance mod, regardless of this setting.</b></i>
 	/// </summary>
-	[DefaultValue( 1.5f )]
 	[Category( "Distance Mod" )]
-	public float RampupMultiplier { get; set; }
+	public float RampupMultiplier { get; set; } = 1.5f;
 
 	//
 	// Timings
@@ -137,9 +131,8 @@ public class WeaponData : GameResource
 	/// </summary>
 	[Category( "Timings" )]
 	public float ReloadStartTime { get; set; }
-	[DefaultValue( 2 )]
 	[Category( "Timings" )]
-	public float SmackTime { get; set; }
+	public float SmackTime { get; set; } = 2;
 
 
 	//
@@ -151,7 +144,7 @@ public class WeaponData : GameResource
 	/// Main image, used to represent the weapon. Is used in the weapon selection menu.
 	/// </summary>
 	[Category( "Images" )]
-	[ResourceType( "png" )] 
+	[ResourceType( "png" )]
 	public string InventoryIcon { get; set; }
 
 	/// <summary>
@@ -159,7 +152,7 @@ public class WeaponData : GameResource
 	/// weapon. This is also a fallback to all other kill icon types in case those are missing.
 	/// </summary>
 	[Category( "Images" )]
-	[ResourceType( "png" )] 
+	[ResourceType( "png" )]
 	public string KillFeedIcon { get; set; }
 	/// <summary>
 	/// This icon is used for special kills of this weapon. For instance: backstabs and headshots count as "special" kills.
@@ -178,26 +171,21 @@ public class WeaponData : GameResource
 
 
 	[Category( "Visuals" )]
-	[DefaultValue( 2 )]
-	public int TracerFrequency { get; set; }
+	public int TracerFrequency { get; set; } = 2;
 	[Category( "Visuals" )]
 	[ResourceType( "vpcf" )]
-	[DefaultValue( "particles/bullet_tracers/bullet_tracer01_red.vpcf" )]
-	public string TracerRed { get; set; }
+	public string TracerRed { get; set; } = "particles/bullet_tracers/bullet_tracer01_red.vpcf";
 	[Category( "Visuals" )]
 	[ResourceType( "vpcf" )]
-	[DefaultValue( "particles/bullet_tracers/bullet_tracer01_blue.vpcf" )]
-	public string TracerBlue { get; set; }
+	public string TracerBlue { get; set; } = "particles/bullet_tracers/bullet_tracer01_blue.vpcf";
 	[Category( "Visuals" )]
 	[ResourceType( "vpcf" )]
-	[DefaultValue( "particles/bullet_tracers/bullet_tracer01_red_crit.vpcf" )]
-	public string TracerRedCritical { get; set; }
+	public string TracerRedCritical { get; set; } = "particles/bullet_tracers/bullet_tracer01_red_crit.vpcf";
 	[Category( "Visuals" )]
 	[ResourceType( "vpcf" )]
-	[DefaultValue( "particles/bullet_tracers/bullet_tracer01_blue_crit.vpcf" )]
-	public string TracerBlueCritical { get; set; }
-	[ResourceType( "vpcf" )]
+	public string TracerBlueCritical { get; set; } = "particles/bullet_tracers/bullet_tracer01_blue_crit.vpcf";
 	[Category( "Visuals" )]
+	[ResourceType( "vpcf" )]
 	public string MuzzleFlash { get; set; }
 
 
@@ -209,7 +197,7 @@ public class WeaponData : GameResource
 	/// <summary>
 	/// Sound that is played when we made a single shot.
 	/// </summary>
-	[Category("Sounds")]
+	[Category( "Sounds" )]
 	[ResourceType( "sound" )]
 	[Title( "Single Shot" )]
 	public string SoundSingle { get; set; }

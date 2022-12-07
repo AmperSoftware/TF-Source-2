@@ -24,7 +24,7 @@ partial class TFPlayer
 	[ClientRpc]
 	public void CreateGibs()
 	{
-		if ( Model == null ) 
+		if ( Model == null )
 			return;
 
 		var angImpulse = new Vector3( Rand.Float( 0, 120 ), Rand.Float( 0, 120 ), 0 );
@@ -163,7 +163,7 @@ partial class TFGib : ModelEntity
 		// Temp solution because OnPhysicsCollisions are not called on client only entities.
 		//
 
-		if ( !PhysicsBody.IsValid() ) 
+		if ( !PhysicsBody.IsValid() )
 			return;
 
 		var center = PhysicsBody.MassCenter;
@@ -176,7 +176,7 @@ partial class TFGib : ModelEntity
 		for ( var i = 0; i < 6; i++ )
 		{
 			var dir = Vector3.Zero;
-			switch(i)
+			switch ( i )
 			{
 				case 0: dir = Vector3.Up; break;
 				case 1: dir = Vector3.Down; break;
@@ -193,13 +193,13 @@ partial class TFGib : ModelEntity
 			if ( tr.Hit )
 			{
 				if ( ResourceLibrary.TryGet<DecalDefinition>( "data/decal/blood.decal", out var decal ) )
-					DecalSystem.PlaceUsingTrace( decal, tr );
+					Decal.Place( decal, tr );
 
 				hit = true;
 			}
 		}
 
-		if( hit )
+		if ( hit )
 		{
 			LastDecalPosition = center;
 		}
