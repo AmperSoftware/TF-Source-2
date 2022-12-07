@@ -11,36 +11,81 @@
 				[
 					{
 						_class = "Attachment"
-						name = "weapon_bone"
-						parent_bone = "bip_hand_r"
-						relative_origin = [ 2.824778, 5.350601, 1.211195 ]
-						relative_angles = [ -2.533154, -13.339443, -161.66713 ]
-						weight = 1.0
-						ignore_rotation = false
-					},
-					{
-						_class = "Attachment"
-						name = "weapon_bone1"
-						parent_bone = "bip_hand_l"
-						relative_origin = [ -2.824749, -5.350609, -1.211197 ]
-						relative_angles = [ -2.533153, -13.339445, -161.66713 ]
-						weight = 1.0
-						ignore_rotation = false
-					},
-					{
-						_class = "Attachment"
 						name = "eject_brass"
-						parent_bone = "gun"
+						parent_bone = "weapon_bone"
 						relative_origin = [ 1.009217, 6.191494, 3.464704 ]
-						relative_angles = [ -0.0, 44.888035, 180.0 ]
+						relative_angles = [ -0.0, 44.888035, -180.0 ]
 						weight = 1.0
 						ignore_rotation = false
 					},
 					{
 						_class = "Attachment"
 						name = "muzzle"
-						parent_bone = "gun"
+						parent_bone = "weapon_bone"
 						relative_origin = [ 0.0, 5.960703, 9.193801 ]
+						relative_angles = [ -90.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "pedestal_0"
+						parent_bone = "weapon_bone"
+						relative_origin = [ 0.0, 2.826619, 2.045477 ]
+						relative_angles = [ -90.0, -90.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "unusual_0"
+						parent_bone = "weapon_bone"
+						relative_origin = [ 0.0, 5.960703, 8.63168 ]
+						relative_angles = [ -90.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "unusual_1"
+						parent_bone = "weapon_bone"
+						relative_origin = [ 0.0, 5.838126, 6.305295 ]
+						relative_angles = [ -90.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "unusual_2"
+						parent_bone = "weapon_bone"
+						relative_origin = [ 0.0, 5.715549, 3.978911 ]
+						relative_angles = [ -90.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "unusual_3"
+						parent_bone = "weapon_bone"
+						relative_origin = [ 0.0, 5.592973, 1.652526 ]
+						relative_angles = [ -90.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "unusual_4"
+						parent_bone = "weapon_bone"
+						relative_origin = [ 0.0, 5.470396, -0.673858 ]
+						relative_angles = [ -90.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "unusual_5"
+						parent_bone = "weapon_bone"
+						relative_origin = [ 0.0, 5.347819, -3.000242 ]
 						relative_angles = [ -90.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
@@ -61,7 +106,7 @@
 								parent_bone = "bip_lowerarm_r"
 								surface_property = "default"
 								translation_only = false
-								group_id = 0
+								tags = ""
 								hitbox_mins = [ -2.1, -5.37, -4.12 ]
 								hitbox_maxs = [ 1.81, 12.23, 1.88 ]
 							},
@@ -70,7 +115,7 @@
 								parent_bone = "bip_hand_r"
 								surface_property = "default"
 								translation_only = false
-								group_id = 0
+								tags = ""
 								hitbox_mins = [ -1.83, -0.47, -2.0 ]
 								hitbox_maxs = [ 2.17, 7.53, 4.0 ]
 							},
@@ -79,7 +124,7 @@
 								parent_bone = "bip_lowerarm_l"
 								surface_property = "default"
 								translation_only = false
-								group_id = 0
+								tags = ""
 								hitbox_mins = [ -1.81, -12.23, -2.5 ]
 								hitbox_maxs = [ 2.1, 5.37, 2.5 ]
 							},
@@ -88,7 +133,7 @@
 								parent_bone = "bip_hand_l"
 								surface_property = "default"
 								translation_only = false
-								group_id = 0
+								tags = ""
 								hitbox_mins = [ -3.03, -7.58, -4.49 ]
 								hitbox_maxs = [ 1.37, 0.55, 2.3 ]
 							},
@@ -97,7 +142,7 @@
 								parent_bone = "gun"
 								surface_property = "default"
 								translation_only = false
-								group_id = 0
+								tags = ""
 								hitbox_mins = [ -1.11, 3.0, -2.5 ]
 								hitbox_maxs = [ 1.07, 7.0, 8.5 ]
 							},
@@ -112,7 +157,7 @@
 					{
 						_class = "RenderMeshFile"
 						name = "v_pistol"
-						filename = "models/weapons/v_models/v_pistol_scout/v_pistol_scout.dmx"
+						filename = "models/weapons/v_models/v_pistol_scout/v_pistol_scout.smd"
 						import_translation = [ 0.0, 0.0, 0.0 ]
 						import_rotation = [ 0.0, 0.0, 0.0 ]
 						import_scale = 1.0
@@ -150,7 +195,7 @@
 								}
 							},
 						]
-						activity_name = "ACT_VM_DRAW"
+						activity_name = "ACT_SECONDARY_VM_DRAW"
 						activity_weight = 1
 						weight_list_name = ""
 						fade_in_time = 0.2
@@ -161,7 +206,7 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "models/weapons/v_models/v_pistol_scout/anims/draw.smd"
+						source_filename = "models/weapons/arms/c_scout_arms/anims/p_draw.dmx"
 						start_frame = -1
 						end_frame = -1
 						framerate = 30.0
@@ -171,7 +216,7 @@
 					{
 						_class = "AnimFile"
 						name = "idle"
-						activity_name = "ACT_VM_IDLE"
+						activity_name = "ACT_SECONDARY_VM_IDLE"
 						activity_weight = 1
 						weight_list_name = ""
 						fade_in_time = 0.2
@@ -182,7 +227,7 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "models/weapons/v_models/v_pistol_scout/anims/idle.smd"
+						source_filename = "models/weapons/arms/c_scout_arms/anims/p_idle.dmx"
 						start_frame = -1
 						end_frame = -1
 						framerate = 30.0
@@ -192,7 +237,7 @@
 					{
 						_class = "AnimFile"
 						name = "fire"
-						activity_name = "ACT_VM_PRIMARYATTACK"
+						activity_name = "ACT_SECONDARY_VM_PRIMARYATTACK"
 						activity_weight = 1
 						weight_list_name = ""
 						fade_in_time = 0.2
@@ -203,7 +248,7 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "models/weapons/v_models/v_pistol_scout/anims/fire.smd"
+						source_filename = "models/weapons/arms/c_scout_arms/anims/p_fire.dmx"
 						start_frame = -1
 						end_frame = -1
 						framerate = 30.0
@@ -240,7 +285,7 @@
 								}
 							},
 						]
-						activity_name = "ACT_VM_RELOAD"
+						activity_name = "ACT_SECONDARY_VM_RELOAD"
 						activity_weight = 1
 						weight_list_name = ""
 						fade_in_time = 0.2
@@ -251,7 +296,136 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "models/weapons/v_models/v_pistol_scout/anims/reload.smd"
+						source_filename = "models/weapons/arms/c_scout_arms/anims/p_reload.dmx"
+						start_frame = -1
+						end_frame = -1
+						framerate = 30.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "inspect_start"
+						children = 
+						[
+							{
+								_class = "AnimEvent"
+								event_class = "AE_CL_PLAYSOUND"
+								event_frame = 0
+								event_keys = 
+								{
+									name = "WeaponInspect.Movement1"
+									stop_on_seq_change = false
+									use_layer_sequence = false
+									tags = ""
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_CL_PLAYSOUND"
+								event_frame = 20
+								event_keys = 
+								{
+									name = "Weapon_Pistol.ReloadScout"
+									stop_on_seq_change = false
+									use_layer_sequence = false
+									tags = ""
+								}
+							},
+						]
+						activity_name = "ACT_SECONDARY_VM_INSPECT_START"
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = false
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						source_filename = "models/weapons/arms/c_scout_arms/anims/secondary_inspect_start.dmx"
+						start_frame = -1
+						end_frame = -1
+						framerate = 30.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "inspect_idle"
+						activity_name = "ACT_SECONDARY_VM_INSPECT_IDLE"
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						source_filename = "models/weapons/arms/c_scout_arms/anims/secondary_inspect_idle.dmx"
+						start_frame = -1
+						end_frame = -1
+						framerate = 30.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "inspect_end"
+						children = 
+						[
+							{
+								_class = "AnimEvent"
+								event_class = "AE_CL_PLAYSOUND"
+								event_frame = 1
+								event_keys = 
+								{
+									name = "Weapon_Pistol.ClipIn"
+									stop_on_seq_change = false
+									use_layer_sequence = false
+									tags = ""
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_CL_PLAYSOUND"
+								event_frame = 33
+								event_keys = 
+								{
+									name = "WeaponInspect.Movement3"
+									stop_on_seq_change = false
+									use_layer_sequence = false
+									tags = ""
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_CL_PLAYSOUND"
+								event_frame = 67
+								event_keys = 
+								{
+									name = "WeaponInspect.Movement2"
+									stop_on_seq_change = false
+									use_layer_sequence = false
+									tags = ""
+								}
+							},
+						]
+						activity_name = "ACT_SECONDARY_VM_INSPECT_END"
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = false
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						source_filename = "models/weapons/arms/c_scout_arms/anims/secondary_inspect_end.dmx"
 						start_frame = -1
 						end_frame = -1
 						framerate = 30.0
@@ -284,8 +458,8 @@
 						remaps = 
 						[
 							{
-								from = "models/weapons/v_pistol/v_pistol.vmat"
-								to = "materials/models/weapons/v_pistol/v_pistol.vmat"
+								from = "c_pistol.vmat"
+								to = "materials/models/weapons/c_models/c_pistol/c_pistol.vmat"
 							},
 						]
 						use_global_default = false
@@ -297,6 +471,7 @@
 		model_archetype = ""
 		primary_associated_entity = ""
 		anim_graph_name = "models/weapons/v_models/animgraphs/standard.vanmgrph"
+		base_model_name = ""
 		importer_notes = """
 Imported from compiled VMDL_C
 """
