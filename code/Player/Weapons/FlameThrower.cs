@@ -277,7 +277,6 @@ public partial class FlameThrower : TFHoldWeaponBase
 		if ( target.Team == Team || !target.CanBeDeflected )
 			return false;
 
-		var curSpeed = target.Velocity.Length;
 		var startPos = Owner.EyePosition;
 		var endPos = startPos + forward * AirblastDeflectTraceRange;
 
@@ -292,24 +291,25 @@ public partial class FlameThrower : TFHoldWeaponBase
 			.Run();
 
 		var vecDir = tr.EndPosition - target.WorldSpaceBounds.Center;
+		vecDir = vecDir.Normal;
 
-		// If projectile has physics movement and it's currently stationary
-		if ( target.MoveType == ProjectileMoveType.Physics ) 
+		if ( target.MoveType == ProjectileMoveType.Physics )
 		{
-			curSpeed = target.PhysicsBody.Velocity.Length;
-
-			if ( !target.PhysicsEnabled )
-			{
-				vecDir = target.WorldSpaceBounds.Center - Owner.WorldSpaceBounds.Center;
-				target.PhysicsEnabled = true;
-			}
+			var physicsBody = target.PhysicsBody;
+			physicsBody.Velocity = vecDir * physicsBody.Velocity.Length;
+		}
+		else if ( target.MoveType == ProjectileMoveType.Fly )
+		{
+			target.Velocity = vecDir * target.Velocity.Length;
 		}
 
-		vecDir = vecDir.Normal;
-		var vecVel = vecDir * curSpeed;
+		var ctx = new DeflectingContext
+		{
+			Weapon = this,
+			Who = TFOwner
+		};
 
-		target.Velocity = vecVel;
-		target.Deflected( this, TFOwner );;
+		target.Deflected( ctx );
 
 		return true;
 	}

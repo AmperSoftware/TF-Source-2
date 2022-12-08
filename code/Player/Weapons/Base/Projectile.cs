@@ -38,23 +38,27 @@ public partial class TFProjectile : Projectile
 	public const string DeflectedEffect = "particles/rocketjumptrail/deflect_fx.vpcf";
 	Sound DeflectSound;
 
-	public virtual void Deflected( TFWeaponBase weapon, TFPlayer who )
+	public virtual void Deflected( DeflectingContext ctx )
 	{
-		if ( !IsServer )
-			return;
+		Owner = ctx.Who;
+		Launcher = ctx.Weapon;
 
-		TeamNumber = who.TeamNumber;
-		SetMaterialGroup( Team == TFTeam.Blue ? 1 : 0 );
-		Owner = who;
-		Launcher = weapon;
+		if ( ctx.ShouldChangeTeam )
+		{
+			TeamNumber = ctx.Who.TeamNumber;
+			SetMaterialGroup( Team == TFTeam.Blue ? 1 : 0 );
+		}
 
-		// Reflects make projectiles inflict minicritical damage.
-		if ( ShouldMiniCritOnDeflection() )
-			DamageFlags |= TFDamageFlags.MiniCritical;
+		if ( ctx.ShouldApplyBoost )
+		{
+			// Reflects make projectiles inflict minicritical damage.
+			if ( ShouldMiniCritOnDeflection() )
+				DamageFlags |= TFDamageFlags.MiniCritical;
 
-		// Pyro was critboosted, projectiles retain the boost.
-		if ( who.IsCritBoosted )
-			DamageFlags |= TFDamageFlags.Critical;
+			// Pyro was critboosted, projectiles retain the boost.
+			if ( ctx.Who.IsCritBoosted )
+				DamageFlags |= TFDamageFlags.Critical;
+		}
 
 		CreateTrails();
 		DeflectedEffects();
