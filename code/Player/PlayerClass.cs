@@ -78,7 +78,7 @@ partial class TFPlayer
 	{
 		// all classes minus undefined.
 		var count = Enum.GetValues( typeof( TFPlayerClass ) ).Length - 1;
-		var random = Rand.Int( 0, count - 1 );
+		var random = Game.Random.Int( 0, count - 1 );
 		var pclass = PlayerClass.Get( (TFPlayerClass)random );
 
 		if ( pclass == null )

@@ -1,4 +1,5 @@
 using Sandbox;
+using Editor;
 using Amper.FPS;
 
 namespace TFS2;
@@ -11,9 +12,9 @@ namespace TFS2;
 [Title("Dynamic Prop")]
 [Category("Gameplay")]
 [Icon("pest_control")]
-[SandboxEditor.Model]
-[SandboxEditor.RenderFields]
-[SandboxEditor.HammerEntity]
+[Model]
+[RenderFields]
+[HammerEntity]
 partial class PropDynamic : AnimatedEntity
 {
 	[Property] public bool Solid { get; set; } = true;

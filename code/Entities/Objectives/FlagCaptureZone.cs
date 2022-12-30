@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Editor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace TFS2;
 [Title("FLag Capture Zone")]
 [Category("Objectives")]
 [Icon("pin_drop")]
-[SandboxEditor.HammerEntity]
+[HammerEntity]
 public partial class FlagCaptureZone : BaseTrigger, ITeam
 {
 	/// <summary>

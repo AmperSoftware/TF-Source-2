@@ -14,7 +14,6 @@
   ],
   "HasCode": true,
   "CodePath": "code",
-  "RootNamespace": "TFS2",
   "Metadata": {
     "MapList": [
       "amper.koth_viaduct",

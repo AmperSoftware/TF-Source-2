@@ -25,7 +25,7 @@ partial class TFPlayer : IResponseSpeaker<TFResponseConcept, TFResponseContext>
 	float NextResponseTime;
 	public void SpeakConceptIfAllowed( TFResponseConcept concept )
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		if ( !IsAlive )
@@ -73,7 +73,7 @@ partial class TFPlayer : IResponseSpeaker<TFResponseConcept, TFResponseContext>
 
 	public void PlayResponse( ResponseController<TFResponseConcept, TFResponseContext>.Response response )
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		// Stop response if we're already playing another one.
@@ -84,7 +84,7 @@ partial class TFPlayer : IResponseSpeaker<TFResponseConcept, TFResponseContext>
 			ResponseSound = PlaySound( response.SoundEvent )
 				.SetVolume( 1.5f )
 				.SetPosition( EyePosition );
-			
+
 		}
 
 		PlayGestureFromResponseContext( response.Concept );
@@ -102,7 +102,7 @@ partial class TFPlayer : IResponseSpeaker<TFResponseConcept, TFResponseContext>
 	public bool IsGesturing { get; set; }
 	public void SimulateGesture()
 	{
-		if ( !IsServer ) return;
+		if ( !Game.IsServer ) return;
 
 		if ( TimeSinceGesture >= sv_gestureswitchcooldown )
 		{
@@ -144,7 +144,7 @@ partial class TFPlayer : IResponseSpeaker<TFResponseConcept, TFResponseContext>
 	{
 		return;
 
-		switch(concept)
+		switch ( concept )
 		{
 			case TFResponseConcept.VoiceMedic:
 			case TFResponseConcept.VoiceThanks:
@@ -157,7 +157,7 @@ partial class TFPlayer : IResponseSpeaker<TFResponseConcept, TFResponseContext>
 			case TFResponseConcept.VoiceSpy:
 
 				// get teammates
-				var clients = Client.All.Where( x => x.GetTeam() == Team );
+				var clients = Game.Clients.Where( x => x.GetTeam() == Team );
 
 				string message = "";
 				bool found = false;
@@ -185,7 +185,7 @@ partial class TFPlayer : IResponseSpeaker<TFResponseConcept, TFResponseContext>
 	public void PlayGesture( GestureType gesture )
 	{
 		TimeSinceGesture = 0f;      //Part of GestureTriggerSubstitute
-		IsGesturing = true;			//Part of GestureTriggerSubstitute
+		IsGesturing = true;         //Part of GestureTriggerSubstitute
 		SetAnimParameter( "gesture_type", (int)gesture );
 		SetAnimParameter( "b_gesture", true );
 	}

@@ -40,7 +40,7 @@ public class Health : Panel
 
 	public void OnRegenerate( PlayerRegenerateEvent args )
 	{
-		if ( args.Client != Local.Client )
+		if ( args.Client != Game.LocalClient )
 			return;
 
 		SetupClassPreview();

@@ -1,13 +1,13 @@
 ﻿using Sandbox;
-using SandboxEditor;
+using Editor;
 using Amper.FPS;
 
 namespace TFS2;
 
 [Library( "tf_item_teamflag", Description = "Flag which can be picked up and captured in a Flag Capture zone" )]
-[Title("Flag")]
-[Category("Objectives")]
-[Icon("tour")]
+[Title( "Flag" )]
+[Category( "Objectives" )]
+[Icon( "tour" )]
 [EditorModel( "models/flag/briefcase.vmdl" )]
 [HammerEntity]
 public partial class Flag : Item, ITeam
@@ -95,7 +95,7 @@ public partial class Flag : Item, ITeam
 
 	public override void StartTouch( Entity other )
 	{
-		if ( !IsServer ) 
+		if ( !Game.IsServer )
 			return;
 
 		if ( other is TFPlayer player )
@@ -103,7 +103,7 @@ public partial class Flag : Item, ITeam
 			if ( !CanBePickedBy( player ) )
 				return;
 
-			if ( !player.CanPickup( this ) ) 
+			if ( !player.CanPickup( this ) )
 				return;
 
 			Pickup( player );
@@ -115,7 +115,7 @@ public partial class Flag : Item, ITeam
 		if ( Disabled )
 			return false;
 
-		if ( ITeam.IsSame( player, this ) ) 
+		if ( ITeam.IsSame( player, this ) )
 			return false;
 
 		if ( !TFGameRules.Current.FlagsCanBePickedUp() )
@@ -130,7 +130,7 @@ public partial class Flag : Item, ITeam
 	public override void Pickup( TFPlayer player )
 	{
 		base.Pickup( player );
-		if ( !IsServer ) return;
+		if ( !Game.IsServer ) return;
 
 		// GlowActive = false;
 		SetParent( player, "flag", Transform.Zero );
@@ -155,7 +155,7 @@ public partial class Flag : Item, ITeam
 
 	public void Capture( TFPlayer player, FlagCaptureZone zone )
 	{
-		if ( !IsServer ) return;
+		if ( !Game.IsServer ) return;
 
 		base.Drop( player, false, false );
 		Reset();
@@ -175,7 +175,7 @@ public partial class Flag : Item, ITeam
 
 	public void Reset()
 	{
-		if ( !IsServer ) return;
+		if ( !Game.IsServer ) return;
 
 		if ( Owner is TFPlayer player )
 		{
@@ -196,7 +196,7 @@ public partial class Flag : Item, ITeam
 
 	public void Return()
 	{
-		if ( !IsServer ) return;
+		if ( !Game.IsServer ) return;
 
 		// We can't return if we are being held by someone.
 		if ( Owner != null ) return;
@@ -209,7 +209,7 @@ public partial class Flag : Item, ITeam
 
 	public override void Drop( TFPlayer player, bool dropped, bool message )
 	{
-		if ( !IsServer ) return;
+		if ( !Game.IsServer ) return;
 		if ( Disabled ) return;
 
 		base.Drop( player, dropped, message );
@@ -276,7 +276,7 @@ public partial class Flag : Item, ITeam
 		PapersTrail = Particles.Create( "particles/flag_particles/player_intel_papertrail.vpcf", this );
 
 		// create the trail of the team of the current owner.
-		if ( Owner is TFPlayer player && player.Team.IsPlayable() ) 
+		if ( Owner is TFPlayer player && player.Team.IsPlayable() )
 		{
 			ColorTrail = Particles.Create( $"particles/flag_particles/player_intel_trail_{player.Team.GetName()}.vpcf", this );
 		}

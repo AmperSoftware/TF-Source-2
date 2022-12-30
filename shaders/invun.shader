@@ -1,9 +1,5 @@
-//=========================================================================================================================
-// Optional
-//=========================================================================================================================
 HEADER
 {
-	CompileTargets = ( IS_SM_50 && ( PC || VULKAN ) );
 	Description = "Überchage invulnerable shader effect for player models";
 }
 
@@ -145,7 +141,7 @@ PS
 		return sineOut;
 	}
 
-	PixelOutput MainPs(PixelInput i)
+	float4 MainPs(PixelInput i) : SV_Target0
 	{
 		Material material = GatherMaterial(i);
 
@@ -213,9 +209,9 @@ PS
 		rimlight *= rimlightDirectionMultiplier;
 
 		//Finalise output, add reflection to lit output via "lighten" mode, add rimlight
-		PixelOutput o = FinalizePixelMaterial( i, material );
-		o.vColor.rgb = float3(max(reflectionColor.x, o.vColor.x), max(reflectionColor.y, o.vColor.y), max(reflectionColor.z, o.vColor.z));
-		o.vColor.rgb += rimlight.rgb;
+		float4 o = FinalizePixelMaterial( i, material );
+		o.rgb = float3(max(reflectionColor.x, o.x), max(reflectionColor.y, o.y), max(reflectionColor.z, o.z));
+		o.rgb += rimlight.rgb;
 
         return o;
 	}

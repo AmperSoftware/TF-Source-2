@@ -12,13 +12,13 @@ partial class Loadout
 	[ClientRpc]
 	public static void OnServerRequest()
 	{
-		Host.AssertClient();
+		Game.AssertClient();
 		LocalLoadout.SendDataToServer();
 	}
 
 	public async void SendDataToServer()
 	{
-		Host.AssertClient();
+		Game.AssertClient();
 
 		// Make sure our loadout is loaded before we access it.
 		await Load();
@@ -43,7 +43,7 @@ partial class Loadout
 
 	public bool LoadDataFromDisk()
 	{
-		Host.AssertClient();
+		Game.AssertClient();
 
 		// Get data from disk.
 		Data = GetDataFromDisk();
@@ -56,7 +56,7 @@ partial class Loadout
 
 	public LoadoutData GetDataFromDisk()
 	{
-		Host.AssertClient();
+		Game.AssertClient();
 
 		if ( FileSystem.Data.FileExists( "loadout.json" ) )
 		{
@@ -76,7 +76,7 @@ partial class Loadout
 
 	public bool SetLoadoutItem( PlayerClass pclass, TFWeaponSlot slot, WeaponData weapon )
 	{
-		Host.AssertClient();
+		Game.AssertClient();
 
 		if ( !IsDataValid() )
 			return false;
@@ -107,7 +107,7 @@ partial class Loadout
 
 	public void WriteDataToDisk()
 	{
-		Host.AssertClient();
+		Game.AssertClient();
 
 		if ( Data == null )
 			return;

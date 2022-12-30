@@ -89,14 +89,14 @@ PS
 
     DynamicCombo( D_ENABLED, 0..1, Sys( PC ) );
 
-    PixelOutput MainPs( PixelInput i )
+    float4 MainPs(PixelInput i) : SV_Target0
     {
-        PixelOutput o;
+        float4 o;
         float2 uv = i.vTexCoord.xy - g_vViewportOffset.xy / g_vRenderTargetSize;
 
         #if D_ENABLED
         float scale = lerp(g_scaleRange.x, g_scaleRange.y, sin(g_flTime * g_scaleSpeed) * 0.5 + 0.5);
-        o.vColor = Tex2D(g_tColorBuffer, uv) * Tex2D(vignette, uv);
+        o = Tex2D(g_tColorBuffer, uv) * Tex2D(vignette, uv);
         float4 overlay = Tex2D(invulnOverlayNormal, uv);
         overlay.rg = overlay.rg * 2 - 1;
 
@@ -110,10 +110,10 @@ PS
         float3 overlayTint = refracted;//(o.vColor.rgb > 0.5) * (1 - (1-2*(o.vColor.rgb-0.5)) * (1-g_colorTint)) + (o.vColor.rgb <= 0.5) * ((2*o.vColor.rgb) * refracted);
 
         //lerp between normal frame and modified frame based on alpha
-        o.vColor.rgb = lerp(o.vColor.rgb, overlayTint, overlay.a);
+        o.rgb = lerp(o.rgb, overlayTint, overlay.a);
 
         #else
-        o.vColor = Tex2D(g_tColorBuffer, uv);
+        o = Tex2D(g_tColorBuffer, uv);
         #endif
         return o;
     }

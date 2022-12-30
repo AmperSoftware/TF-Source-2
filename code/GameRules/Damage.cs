@@ -17,30 +17,30 @@ partial class TFGameRules
 	{
 		// If damage is critical, it can't be mini-crit.
 		// Remove mini crit flag, if we already have crit.
-		if ( info.Flags.HasFlag( TFDamageFlags.Critical ) )
+		if ( info.HasTag( TFDamageFlags.Critical ) )
 		{
-			info = info.WithoutFlag( TFDamageFlags.MiniCritical );
+			info = info.WithoutTags( TFDamageFlags.MiniCritical );
 		}
 
 		//
 		// Critical Damage adds 3X to the base damage.
 		//
-
-		if ( info.Flags.HasFlag( TFDamageFlags.Critical ) )
+		
+		if ( info.HasTag( TFDamageFlags.Critical ) )
 			info.Damage *= CritDamageMultiplier;
 
 		//
 		// Distance Mod (Damage Falloff / Rampup)
 		//
 
-		if ( (info.Flags & TFDamageFlags.UseDistanceMod) != 0 ) 
+		if ( info.UsesDistanceMod() ) 
 			ApplyDamageDistanceMod( ref info, victim );
 
 		//
 		// Mini-Crit adds 1.35X to the falloff'd damage.
 		//
 
-		if ( info.Flags.HasFlag( TFDamageFlags.MiniCritical ) )
+		if ( info.HasTag( TFDamageFlags.MiniCritical ) )
 			info.Damage *= MiniCritDamageMultiplier;
 	}
 
@@ -89,11 +89,11 @@ partial class TFGameRules
 		var distLerp = (distance / optimalDist).RemapClamped( 0, 2, 1, 0 );
 
 		// If damage was set to not use rampup, always treat our damage as on optimal distance if it's closer.
-		if ( !info.Flags.HasFlag( TFDamageFlags.UseRampup ) )
+		if ( !info.HasTag( TFDamageFlags.UseRampup ) )
 			distLerp = MathF.Min( 0.5f, distLerp );
-
+		
 		// If damage was set to not use falloff, always treat our damage as on optimal distance if it's farther.
-		if ( !info.Flags.HasFlag( TFDamageFlags.UseFalloff ) )
+		if ( !info.HasTag( TFDamageFlags.UseFalloff ) )
 			distLerp = MathF.Max( 0.5f, distLerp );
 
 		// Apply an easing function to make the chart curve.
@@ -105,8 +105,8 @@ partial class TFGameRules
 		//
 		// Critical or Mini-Critical damage always deals at least 100% damage regardless of the falloff
 		//
-
-		if ( info.Flags.HasFlag( TFDamageFlags.Critical ) || info.Flags.HasFlag( TFDamageFlags.MiniCritical ) )
+		
+		if ( info.HasTag( TFDamageFlags.Critical ) || info.HasTag( TFDamageFlags.MiniCritical ) )
 			distMod = Math.Max( distMod, 1 );
 
 		info.Damage *= distMod;
@@ -123,32 +123,39 @@ partial class TFGameRules
 /// Some reuse sbox flags that are not used in TF:S2 as is.
 /// https://wiki.teamfortress.com/wiki/Damage#Damage_types
 /// </summary>
-public abstract class TFDamageFlags
+public static class TFDamageFlags
 {
-	public const DamageFlags Generic = DamageFlags.Generic;
-	public const DamageFlags Crush = DamageFlags.Crush;
-	public const DamageFlags Bullet = DamageFlags.Bullet;
-	public const DamageFlags Slash = DamageFlags.Slash;
-	public const DamageFlags Burn = DamageFlags.Burn;
-	public const DamageFlags Ignite = DamageFlags.Plasma;
-	public const DamageFlags Vehicle = DamageFlags.Vehicle;
-	public const DamageFlags Fall = DamageFlags.Fall;
-	public const DamageFlags Blast = DamageFlags.Blast;
-	public const DamageFlags Melee = DamageFlags.Blunt;
-	public const DamageFlags Shock = DamageFlags.Shock;
-	public const DamageFlags Drown = DamageFlags.Drown;
+	public const string Generic = DamageFlags.Generic;
+	public const string Crush = "crush";
+	public const string Bullet = DamageFlags.Bullet;
+	public const string Slash = DamageFlags.Slash;
+	public const string Burn = DamageFlags.Burn;
+	public const string Ignite = "ignite";
+	public const string Vehicle = DamageFlags.Vehicle;
+	public const string Fall = DamageFlags.Fall;
+	public const string Blast = DamageFlags.Blast;
+	public const string Melee = DamageFlags.Blunt;
+	public const string Shock = DamageFlags.Shock;
+	public const string Drown = DamageFlags.Drown;
 
-	public const DamageFlags AlwaysGib = DamageFlags.AlwaysGib;
-	public const DamageFlags DoNotGib = DamageFlags.DoNotGib;
+	public const string AlwaysGib = DamageFlags.AlwaysGib;
+	public const string DoNotGib = DamageFlags.DoNotGib;
 
-	public const DamageFlags PreventPhysicsForce = DamageFlags.Paralyze;
+	public const string PreventPhysicsForce = "no_physics";
 
 	// Critical Stuff
-	public const DamageFlags Critical = DamageFlags.Acid;
-	public const DamageFlags MiniCritical = DamageFlags.Radiation;
-
+	public const string Critical = "critical";
+	public const string MiniCritical = "mini_critical";
+	
 	// Distance Mod Stuff
-	public const DamageFlags UseRampup = DamageFlags.Sonic;
-	public const DamageFlags UseFalloff = DamageFlags.Physgun;
-	public const DamageFlags UseDistanceMod = UseRampup | UseFalloff;
+	public const string UseRampup = "rampup";
+	public const string UseFalloff = "falloff";
+	public static bool UsesDistanceMod(this ExtendedDamageInfo info)
+	{
+		return info.HasTag( UseRampup ) || info.HasTag( UseFalloff );
+	}
+	public static bool UsesDistanceMod(this DamageInfo info)
+	{
+		return info.HasTag( UseRampup ) || info.HasTag( UseFalloff );
+	}
 }

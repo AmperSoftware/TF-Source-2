@@ -18,7 +18,7 @@ partial class ClassLoadout : MenuOverlay
 
 	public ClassLoadout()
 	{
-		PlayerClass = Local.Client.GetPlayerClass();
+		PlayerClass = Sandbox.Game.LocalClient.GetPlayerClass();
 		SetupPage();
 	}
 
@@ -32,8 +32,8 @@ partial class ClassLoadout : MenuOverlay
 	{
 		if ( !IsVisible ) return;
 
-		PlayerName.Text = Local.Client.Name;
-		PlayerAvatar.SetTexture( $"avatarbig:{Local.Client.PlayerId}" );
+		PlayerName.Text = Sandbox.Game.LocalClient.Name;
+		PlayerAvatar.SetTexture( $"avatarbig:{Sandbox.Game.LocalClient.SteamId}" );
 	}
 
 	public async void SetupPage()
@@ -58,7 +58,7 @@ partial class ClassLoadout : MenuOverlay
 			if ( weapon == null )
 			{
 				var defaultweapon = PlayerClass.GetDefaultWeaponForSlot( slot );
-				if(defaultweapon == null) // No default weapon for this slot, skipping
+				if ( defaultweapon == null ) // No default weapon for this slot, skipping
 					continue;
 
 				weapon = defaultweapon;

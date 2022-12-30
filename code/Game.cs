@@ -1,5 +1,4 @@
 ﻿using Sandbox;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Amper.FPS;
@@ -17,12 +16,12 @@ public partial class TFGameRules : SDKGame
 		Current = this;
 		Movement = new TFGameMovement();
 
-		if ( IsServer )
+		if ( Game.IsServer )
 		{
 			_ = new TFHud();
 		}
 
-		if ( IsClient )
+		if ( Game.IsClient )
 		{
 			PostProcessingManager = new TFPostProcessingManager();
 		}
@@ -32,11 +31,11 @@ public partial class TFGameRules : SDKGame
 	{
 		base.Tick();
 
-		if ( IsServer )
+		if ( Game.IsServer )
 			TickRespawnWaves();
 	}
 
-	public override void ClientJoined( Client client )
+	public override void ClientJoined( IClient client )
 	{
 		var player = new TFPlayer();
 		player.Respawn();
@@ -56,14 +55,14 @@ public partial class TFGameRules : SDKGame
 		{
 			player.PlayerClass = PlayerClass.Get( tf_bot_force_class );
 			player.ChangeTeam( player.GetAutoTeam(), true, false );
-		} 
-			
+		}
+
 	}
 
 	[ConVar.Replicated] public static TFPlayerClass tf_bot_force_class { get; set; } = TFPlayerClass.Scout;
 
 
-	public override void ClientDisconnect( Client client, NetworkDisconnectionReason reason )
+	public override void ClientDisconnect( IClient client, NetworkDisconnectionReason reason )
 	{
 		base.ClientDisconnect( client, reason );
 
@@ -73,7 +72,7 @@ public partial class TFGameRules : SDKGame
 
 	public virtual void PlayerChangeClass( TFPlayer player, PlayerClass pclass )
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		// Call a game event.
@@ -86,7 +85,7 @@ public partial class TFGameRules : SDKGame
 
 	public virtual void PlayerRegenerate( TFPlayer player, bool full )
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		// Call a game event.
@@ -127,13 +126,13 @@ public partial class TFGameRules : SDKGame
 		WaitingForPlayersTimer?.Delete();
 	}
 
-	public override void OnChatMessageSent( Client sender, string message, ChatType type )
+	public override void OnChatMessageSent( IClient sender, string message, ChatType type )
 	{
 		base.OnChatMessageSent( sender, message, type );
 
-		var clients = Client.All.ToArray();
+		var clients = Game.Clients;
 
-		switch( type )
+		switch ( type )
 		{
 			case ChatType.Team:
 				clients = clients.Where( x => ITeam.IsSame( x.Pawn, sender.Pawn ) ).ToArray();

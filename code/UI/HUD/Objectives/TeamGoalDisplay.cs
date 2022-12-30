@@ -15,7 +15,7 @@ partial class TeamGoalDisplay : Panel
 
 		if ( canSee )
 		{
-			if ( Local.Pawn is TFPlayer player && player.IsAlive && player.Team.IsPlayable() )
+			if ( Sandbox.Game.LocalPawn is TFPlayer player && player.IsAlive && player.Team.IsPlayable() )
 			{
 				if ( TFGameRules.Current.TeamGoal.ContainsKey( player.Team ) )
 				{

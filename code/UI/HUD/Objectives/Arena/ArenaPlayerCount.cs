@@ -22,7 +22,7 @@ internal partial class ArenaPlayerCount : Panel
 		BlueCount.Text = players.Where( x => x.Team == TFTeam.Blue ).Count().ToString();
 
 		// Move the arena player count down if in specator mode.
-		SetClass( "if-spectator", ((TFPlayer)Local.Pawn).Team == TFTeam.Spectator );
+		SetClass( "if-spectator", ((TFPlayer)Sandbox.Game.LocalPawn).Team == TFTeam.Spectator );
 	}
 
 	public bool ShouldDraw()

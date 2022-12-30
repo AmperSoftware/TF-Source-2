@@ -16,6 +16,6 @@ public class QuitDialog : MenuOverlay
 
 	public void OnClickQuit()
 	{
-		Local.Client.Kick();
+		Game.LocalClient.Kick();
 	}
 }

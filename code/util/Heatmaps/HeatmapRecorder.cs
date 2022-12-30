@@ -29,7 +29,7 @@ public class HeatmapRecorder
 
 		EventDispatcher.Subscribe<PlayerDeathEvent>( e =>
 		{
-			if ( Host.IsClient )
+			if ( Game.IsClient )
 				// We only record on the server
 				return;
 

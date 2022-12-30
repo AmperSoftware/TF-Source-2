@@ -51,7 +51,7 @@ partial class TFPlayer
 	public void OnInvulnerableRemoved()
 	{
 		// Play uber sound deactivation effect.
-		if ( IsLocalPawn ) 
+		if ( IsLocalPawn )
 			PlaySound( "player.invulnerability.off" );
 
 		AddCondition(
@@ -92,7 +92,7 @@ partial class TFPlayer
 		FlameAfterburnTime -= Time.Delta * reductionScale;
 
 		// Burn time has expired, put us out.
-		if ( FlameAfterburnTime <= 0 ) 
+		if ( FlameAfterburnTime <= 0 )
 		{
 			RemoveCondition( TFCondition.Burning );
 			FlameAfterburnTime = 0;
@@ -103,7 +103,7 @@ partial class TFPlayer
 		// Deal burn damage
 		//
 
-		if ( PlayerClass?.Abilities.AfterBurnImmune ?? false ) 
+		if ( PlayerClass?.Abilities.AfterBurnImmune ?? false )
 			return;
 
 		if ( NextAfterburnDamageTime > Time.Now )
@@ -130,7 +130,7 @@ partial class TFPlayer
 
 	public void OnBurningAdded()
 	{
-		if ( IsServer )
+		if ( Game.IsServer )
 		{
 			// On the server we only play the sound.
 			PlaySound( "player.fire.engulf" );
@@ -145,10 +145,10 @@ partial class TFPlayer
 				: BurningParticleEffectRed;
 
 			BurningEffect = this.CreateParticle( effect );
-			BurningEffect.MakePersistent();	// Disposed only when we stop burning
+			BurningEffect.MakePersistent(); // Disposed only when we stop burning
 		}
 
-		if ( IsLocalPawn && ScreenOverlayBurning == null ) 
+		if ( IsLocalPawn && ScreenOverlayBurning == null )
 		{
 			ScreenOverlayBurning = Particles.Create( BurningScreenParticle, this );
 		}
@@ -156,7 +156,7 @@ partial class TFPlayer
 
 	public void OnBurningRemoved()
 	{
-		if ( IsClient )
+		if ( Game.IsClient )
 		{
 			BurningEffect?.Destroy();
 			BurningEffect = null;

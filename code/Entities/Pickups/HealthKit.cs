@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Editor;
 using System;
 using System.ComponentModel;
 
@@ -30,7 +31,7 @@ public abstract class HealthKit : PickupItem
 [Category( "Pickups" )]
 [Icon("local_hospital")]
 [EditorModel( "models/items/medkit_small.vmdl" )]
-[SandboxEditor.HammerEntity]
+[HammerEntity]
 public class HealthKitSmall : HealthKit
 {
 	public override string ModelPath => "models/items/medkit_small.vmdl";
@@ -43,7 +44,7 @@ public class HealthKitSmall : HealthKit
 [Category( "Pickups" )]
 [Icon( "local_hospital" )]
 [EditorModel( "models/items/medkit_medium.vmdl" )]
-[SandboxEditor.HammerEntity]
+[HammerEntity]
 public class HealthKitMedium : HealthKit
 {
 	public override string ModelPath => "models/items/medkit_medium.vmdl";
@@ -55,7 +56,7 @@ public class HealthKitMedium : HealthKit
 [Category( "Pickups" )]
 [Icon( "local_hospital" )]
 [EditorModel( "models/items/medkit_large.vmdl" )]
-[SandboxEditor.HammerEntity]
+[HammerEntity]
 public class HealthKitFull : HealthKit
 {
 	public override string ModelPath => "models/items/medkit_large.vmdl";

@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Editor;
 using Amper.FPS;
 using System;
 
@@ -8,9 +9,9 @@ namespace TFS2;
 [Title("Respawn Room Visualizer")]
 [Category("Gameplay")]
 [Icon( "fence" )]
-[SandboxEditor.AutoApplyMaterial( "materials/overlays/no_entry.vmat" )]
-[SandboxEditor.Solid]
-[SandboxEditor.HammerEntity]
+[AutoApplyMaterial( "materials/overlays/no_entry.vmat" )]
+[Solid]
+[HammerEntity]
 public partial class RespawnRoomVisualizer : ModelEntity
 {
 	[Property, FGDType( "target_destination" )]
@@ -54,7 +55,7 @@ public partial class RespawnRoomVisualizer : ModelEntity
 		}
 	}
 
-	[Event.Frame]
+	[Event.Client.Frame]
 	public void Frame()
 	{
 		EnableDrawing = IsVisibleForLocalPlayer();

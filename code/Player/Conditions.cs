@@ -78,11 +78,11 @@ partial class TFPlayer
 	/// </summary>
 	public void AddCondition( TFCondition cond, float duration = PermanentCondition, Entity provider = null )
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		// If we're dead, don't take on any new conditions
-		if ( !IsAlive ) 
+		if ( !IsAlive )
 			return;
 
 		if ( duration != PermanentCondition )
@@ -96,7 +96,7 @@ partial class TFPlayer
 		}
 
 		// Add condition to the list of active conditions.
-		if ( !ActiveConditions.Contains( cond ) ) 
+		if ( !ActiveConditions.Contains( cond ) )
 			ActiveConditions.Add( cond );
 
 		ConditionProviders[cond] = provider;
@@ -112,7 +112,7 @@ partial class TFPlayer
 	/// </summary>
 	public void RemoveCondition( TFCondition cond )
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		if ( !InCondition( cond ) )
@@ -186,7 +186,7 @@ partial class TFPlayer
 			var cond = ActiveConditions[i];
 			OnConditionTick( cond );
 
-			if ( IsServer )
+			if ( Game.IsServer )
 			{
 				// Condition doesn't contain expiration time, 
 				// remove it right away.
@@ -216,7 +216,7 @@ partial class TFPlayer
 			OnConditionChanged( cond );
 		}
 
-		foreach ( var cond in oldList.Except( newList ) ) 
+		foreach ( var cond in oldList.Except( newList ) )
 		{
 			OnConditionRemoved( cond );
 			OnConditionChanged( cond );

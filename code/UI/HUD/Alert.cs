@@ -43,7 +43,7 @@ partial class Alert : Panel
 		// If we're unassigned, use our current player's team.
 		if ( team == TFTeam.Unassigned )
 		{
-			if ( Local.Pawn is TFPlayer player )
+			if ( Sandbox.Game.LocalPawn is TFPlayer player )
 				team = player.Team;
 		}
 

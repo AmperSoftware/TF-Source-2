@@ -22,7 +22,7 @@ partial class TFGameRules
 	{
 		base.StartedPreGame();
 
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		WillPlayGameStartSong = ShouldPlayGameStartSong();
@@ -33,7 +33,7 @@ partial class TFGameRules
 	{
 		base.SimulatePreGame();
 
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		if ( WillPlayGameStartSong )
@@ -50,7 +50,7 @@ partial class TFGameRules
 
 	public override void SimulatePreRound()
 	{
-		if ( IsServer )
+		if ( Game.IsServer )
 		{
 			//
 			// Play preround effects

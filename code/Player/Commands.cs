@@ -53,7 +53,7 @@ partial class TFPlayer
 	[ConCmd.Admin( "bot_voicecommand" )]
 	public static void Command_BotCommand( string botname, int menu = -1, int concept = -1 )
 	{
-		var bot = Client.All.FirstOrDefault( x => x.IsBot && x.Name == botname );
+		var bot = Game.Clients.FirstOrDefault( x => x.IsBot && x.Name == botname );
 		if ( bot == null )
 		{
 			Log.Error( $"Bot named \"{botname}\" was not found" );
@@ -64,8 +64,8 @@ partial class TFPlayer
 		if ( !botPlayer.IsValid() )
 			return;
 
-		if ( menu < 0 ) menu = Rand.Int( 0, 2 );
-		if ( concept < 0 ) concept = Rand.Int( 0, 8 );
+		if ( menu < 0 ) menu = Game.Random.Int( 0, 2 );
+		if ( concept < 0 ) concept = Game.Random.Int( 0, 8 );
 
 		botPlayer.PlayVoiceCommand( menu, concept );
 	}

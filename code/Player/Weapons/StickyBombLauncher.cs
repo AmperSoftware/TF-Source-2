@@ -26,7 +26,7 @@ public partial class StickyBombLauncher : TFWeaponBase, IChargeable, IPassiveChi
 
 	public override void Attack()
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		var eyeRot = GetAttackRotation();
@@ -48,8 +48,8 @@ public partial class StickyBombLauncher : TFWeaponBase, IChargeable, IPassiveChi
 
 		var velocity = direction * force
 			+ up * 200
-			+ right * Rand.Int( -10, 10 )
-			+ up * Rand.Int( -10, 10 );
+			+ right * Game.Random.Int( -10, 10 )
+			+ up * Game.Random.Int( -10, 10 );
 
 		var bomb = FireProjectile<StickyBomb>( origin, velocity, Data.Damage );
 		Bombs.Add( bomb );
@@ -70,7 +70,7 @@ public partial class StickyBombLauncher : TFWeaponBase, IChargeable, IPassiveChi
 	}
 
 	float NextDenySoundTime;
-	public void PassiveSimulate( Client cl )
+	public void PassiveSimulate( IClient cl )
 	{
 		if ( !WishSecondaryAttack() )
 			return;
@@ -131,7 +131,7 @@ public partial class StickyBombLauncher : TFWeaponBase, IChargeable, IPassiveChi
 				continue;
 			}
 
-			if ( IsServer )
+			if ( Game.IsServer )
 			{
 				bomb.Explode();
 			}
@@ -142,13 +142,13 @@ public partial class StickyBombLauncher : TFWeaponBase, IChargeable, IPassiveChi
 
 	public virtual void OnStickyDestroyed( StickyBomb bomb )
 	{
-		if ( IsServer )
+		if ( Game.IsServer )
 			Bombs.Remove( bomb );
 	}
 
 	protected override void OnDestroy()
 	{
-		if ( IsServer )
+		if ( Game.IsServer )
 			DetonateAllStickyBombs( true );
 
 		base.OnDestroy();
@@ -182,7 +182,7 @@ public partial class StickyBombLauncher : TFWeaponBase, IChargeable, IPassiveChi
 			return;
 
 		var charger = (IChargeable)this;
-		if ( WishPrimaryAttack() && CanPrimaryAttack() ) 
+		if ( WishPrimaryAttack() && CanPrimaryAttack() )
 		{
 			if ( !IsCharging )
 			{
@@ -190,7 +190,7 @@ public partial class StickyBombLauncher : TFWeaponBase, IChargeable, IPassiveChi
 				StopReload();
 			}
 
-			if ( !charger.IsCharged ) 
+			if ( !charger.IsCharged )
 				return;
 		}
 

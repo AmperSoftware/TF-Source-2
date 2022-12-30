@@ -1,5 +1,6 @@
 ﻿using Amper.FPS;
 using Sandbox;
+using System.Linq;
 using TFS2.UI;
 
 namespace TFS2;
@@ -20,7 +21,7 @@ partial class TFGameRules
 			Attacker = attacker,
 			Assister = null,
 			Weapon = weaponData,
-			Flags = info.Flags,
+			Tags = info.Tags.ToArray(),
 			Position = info.ReportPosition,
 			Damage = info.Damage
 		} );
@@ -71,7 +72,7 @@ partial class TFGameRules
 
 	public override void PlayerChangeTeam( SDKPlayer player, int team )
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		base.PlayerChangeTeam( player, team );
 		TFChatBox.AddInformation( To.Everyone, $"{player.Client.Name} joined team {((TFTeam)team).GetTitle()}" );

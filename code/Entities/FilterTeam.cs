@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Editor;
 
 namespace TFS2;
 
@@ -9,7 +10,7 @@ namespace TFS2;
 [Title( "Team Filter" )]
 [Category( "Filters" )]
 [Icon("group")]
-[SandboxEditor.HammerEntity]
+[HammerEntity]
 partial class FilterTeam : Filter
 {
 	/// <summary>

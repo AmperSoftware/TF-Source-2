@@ -36,7 +36,7 @@ internal partial class TFKillFeed : Panel
 		var newTeam = args.NewTeam;
 		var entry = new TFKillFeedEntry();
 
-		if ( cappers.Contains( Local.Client ) )
+		if ( cappers.Contains( Sandbox.Game.LocalClient ) )
 		{
 			entry.SetClass( "is_local_player_involved", true );
 			entry.LifeTimeMultiplier = 2;
@@ -60,7 +60,7 @@ internal partial class TFKillFeed : Panel
 
 	public void OnDeath( PlayerDeathEvent args )
 	{
-		var local = Local.Client;
+		var local = Sandbox.Game.LocalClient;
 
 		// Event arguments
 		var attacker = args.Attacker;

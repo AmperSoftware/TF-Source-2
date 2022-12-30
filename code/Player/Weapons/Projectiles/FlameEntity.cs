@@ -78,7 +78,7 @@ public partial class FlameEntity : TFProjectile
 		var dmgInfo = CreateDamageInfo( damage )
 			.WithHitPosition( Position )
 			.WithOriginPosition( OriginalPosition )
-			.WithReportPosition( Owner.EyePosition );
+			.WithReportPosition( Owner.GetEyePosition() );
 
 		other.TakeDamage( dmgInfo );
 	}
@@ -86,7 +86,7 @@ public partial class FlameEntity : TFProjectile
 	public override Trace SetupCollisionTrace( Vector3 start, Vector3 end, Vector3 mins, Vector3 maxs )
 	{
 		return base.SetupCollisionTrace( start, end, mins, maxs );
-				//.WithoutTags( CollisionTags.Player );
+		//.WithoutTags( CollisionTags.Player );
 	}
 	[ConVar.Server] public static bool tf_debug_flamethrower { get; set; }
 	[ConVar.Server] public static float tf_flamethrower_drag { get; set; } = .85f;

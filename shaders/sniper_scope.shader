@@ -1,6 +1,5 @@
 HEADER
 {
-	CompileTargets = ( IS_SM_50 && ( PC || VULKAN ) );
 	Description = "Post processing screen overlay used for the Sniper Rifle scope";
 }
 
@@ -108,9 +107,9 @@ PS
         return (x - a) / (b - a);
     }
 
-    PixelOutput MainPs( PixelInput i )
+    float4 MainPs(PixelInput i) : SV_Target0
     {
-        PixelOutput o;
+        float4 o;
        
         float2 uv = i.vTexCoord.xy - g_vViewportOffset.xy / g_vRenderTargetSize;
         #if D_ENABLED
@@ -130,11 +129,11 @@ PS
         float2 warpSample = Tex2D(scopewarp, scaledScopeUV).rg * 2.0f - 1.0f;
 
         //Move the UV based on the normal sample
-        o.vColor = Tex2D(g_tColorBuffer, uv.xy + (warpSample * g_warpScale));
+        o = Tex2D(g_tColorBuffer, uv.xy + (warpSample * g_warpScale));
         //Tint output using overlay texture.
-        o.vColor.rgb *= Tex2D(scopeoverlay, scaledScopeUV).rgb;
+        o.rgb *= Tex2D(scopeoverlay, scaledScopeUV).rgb;
         #else
-        o.vColor = Tex2D(g_tColorBuffer, uv.xy);
+        o = Tex2D(g_tColorBuffer, uv.xy);
         #endif
         return o;
     }

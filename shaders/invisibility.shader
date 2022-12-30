@@ -1,8 +1,6 @@
 ﻿HEADER
 {
-    CompileTargets = ( IS_SM_50 && ( PC || VULKAN ) );
     Description = "Invisibility Effect For TFS2";
-    Version = 1;
 }
 
 MODES

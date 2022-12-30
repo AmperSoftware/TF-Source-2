@@ -13,7 +13,7 @@ internal partial class Spectator : Panel
 
 	public Spectator()
 	{
-		MapName.Text = Util.GetMapDisplayName( Global.MapName );
+		MapName.Text = Util.GetMapDisplayName( Sandbox.Game.Server.MapIdent );
 	}
 
 	public override void Tick()
@@ -24,7 +24,7 @@ internal partial class Spectator : Panel
 		if ( !IsVisible )
 			return;
 
-		if ( Local.Pawn is not TFPlayer player )
+		if ( Sandbox.Game.LocalPawn is not TFPlayer player )
 			return;
 
 		UpdateRespawnTimeLabel( player );

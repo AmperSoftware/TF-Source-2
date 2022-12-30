@@ -1,5 +1,6 @@
 ﻿using Amper.FPS;
 using Sandbox;
+using Editor;
 using System.Linq;
 
 namespace TFS2;
@@ -12,8 +13,8 @@ namespace TFS2;
 [Category("Gameplay")]
 [Icon("meeting_room")]
 [EditorModel( "models/editor/team_player_start.vmdl" )]
-[SandboxEditor.DrawAngles]
-[SandboxEditor.HammerEntity]
+[DrawAngles]
+[HammerEntity]
 public partial class TeamSpawnPoint : SDKSpawnPoint
 {
 	/// <summary>

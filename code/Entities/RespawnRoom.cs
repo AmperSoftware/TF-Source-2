@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Editor;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace TFS2;
 [Title("Respawn Room")]
 [Category("Gameplay")]
 [Icon("Home")]
-[SandboxEditor.HammerEntity]
+[HammerEntity]
 public partial class RespawnRoom : BaseTrigger
 {
 	[Property( "Team", Title = "Default Team" )] 

@@ -14,7 +14,7 @@ public class TeamSelection : MenuOverlay
 
 	public TeamSelection()
 	{
-		if ( Local.Pawn is not TFPlayer player ) return;
+		if ( Sandbox.Game.LocalPawn is not TFPlayer player ) return;
 
 		// TODO: Convert to HTML
 		StyleSheet.Load( "/UI/HUD/Server/TeamSelection.scss" );
@@ -226,10 +226,10 @@ public class TeamSelectionButton : Label
 		MenuOverlay.CloseActive();
 	}
 
-	[Event.BuildInput]
+	[Event.Client.BuildInput]
 	public void ProcessClientInput()
 	{
-		if ( Local.Pawn is not TFPlayer player )
+		if ( Sandbox.Game.LocalPawn is not TFPlayer player )
 			return;
 
 		if ( Input.Pressed( Shortcut ) )

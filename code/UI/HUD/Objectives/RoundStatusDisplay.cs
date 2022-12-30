@@ -103,7 +103,7 @@ class RoundStatusTimerEntry : Label
 class RoundStatusPlayers : Panel
 {
 	public TFTeam Team { get; set; }
-	public Dictionary<Client, RoundStatusPlayersEntry> Players { get; set; } = new();
+	public Dictionary<IClient, RoundStatusPlayersEntry> Players { get; set; } = new();
 
 	public RoundStatusPlayers()
 	{
@@ -113,14 +113,14 @@ class RoundStatusPlayers : Panel
 
 	public override void Tick()
 	{
-		var teamClients = Client.All.Where( x => x.GetTeam() == Team );
+		var teamClients = Sandbox.Game.Clients.Where( x => x.GetTeam() == Team );
 		var keyClients = Players.Keys;
 
 		foreach ( var client in teamClients.Except( keyClients ) ) AddClient( client );
 		foreach ( var client in keyClients.Except( teamClients ) ) RemoveClient( client );
 	}
 
-	public void AddClient( Client client )
+	public void AddClient( IClient client )
 	{
 		Players[client] = new RoundStatusPlayersEntry
 		{
@@ -129,7 +129,7 @@ class RoundStatusPlayers : Panel
 		};
 	}
 
-	public void RemoveClient( Client client )
+	public void RemoveClient( IClient client )
 	{
 		if ( Players.TryGetValue( client, out var entry ) )
 		{
@@ -141,7 +141,7 @@ class RoundStatusPlayers : Panel
 
 public class RoundStatusPlayersEntry : Panel
 {
-	public Client Client { get; set; }
+	public IClient Client { get; set; }
 	Panel Portrait { get; set; }
 
 	public RoundStatusPlayersEntry()
@@ -151,7 +151,7 @@ public class RoundStatusPlayersEntry : Panel
 
 	public override void Tick()
 	{
-		var local = Local.Client;
+		var local = Sandbox.Game.LocalClient;
 		if ( local == null )
 			return;
 

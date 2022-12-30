@@ -35,7 +35,7 @@ public partial class TargetIDHovered : TargetID
 		if ( playerClass.IsValid() )
 		{
 			if ( !playerClass.Abilities.CanSeeEnemyHealth )
-				return ITeam.IsSame( target, Local.Pawn );
+				return ITeam.IsSame( target, Game.LocalPawn );
 		}
 
 		return true;

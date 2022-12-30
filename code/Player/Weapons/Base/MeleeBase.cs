@@ -61,7 +61,7 @@ public partial class TFMeleeBase : TFWeaponBase
 
 	public override TraceResult TraceFireBullet( int seedOffset = 0 )
 	{
-		Rand.SetSeed( Time.Tick + seedOffset );
+		Game.Random.SetSeed( Time.Tick + seedOffset );
 
 		var range = GetRange();
 		var spread = GetSpread();
@@ -101,7 +101,7 @@ public partial class TFMeleeBase : TFWeaponBase
 
 		if ( sv_debug_hitscan_hits )
 		{
-			DebugOverlay.Line( tr.StartPosition, tr.EndPosition, IsServer ? Color.Yellow : Color.Green, 5f, true );
+			DebugOverlay.Line( tr.StartPosition, tr.EndPosition, Game.IsServer ? Color.Yellow : Color.Green, 5f, true );
 			DebugOverlay.Sphere( tr.StartPosition, 2f, Color.Cyan, 5, true );
 			DebugOverlay.Sphere( tr.EndPosition, 2f, Color.Red, 5, true );
 			DebugOverlay.Text( $"{tr.Distance}", tr.EndPosition, 5f );
@@ -123,7 +123,7 @@ public partial class TFMeleeBase : TFWeaponBase
 		else
 			PlaySound( Data.SoundHitWorld );
 	}
-	
+
 	public override Trace SetupFireBulletTrace( Vector3 Origin, Vector3 Target )
 	{
 		return base.SetupFireBulletTrace( Origin, Target )

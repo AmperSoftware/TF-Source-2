@@ -20,7 +20,7 @@ partial class TFChatBox : Panel
 
 	public TFChatBox() => Instance = this;
 
-	[Event.BuildInput]
+	[Event.Client.BuildInput]
 	public void ProcessClientInput()
 	{
 		if ( Input.Pressed( InputButton.Chat ) )
@@ -110,7 +110,7 @@ partial class TFChatBox : Panel
 	}
 
 	[ClientRpc]
-	public static void AddClientMessage( Client author, string message, ChatType type )
+	public static void AddClientMessage( IClient author, string message, ChatType type )
 	{
 		// Log.NetInfo( $"TFChatBox::AddClientMessage({author}, {message}, {type})" );
 		if ( Instance == null )
@@ -156,7 +156,7 @@ partial class TFChatBox : Panel
 	}
 
 	[ClientRpc]
-	public static void AddClientVoiceCommand( Client author, string command )
+	public static void AddClientVoiceCommand( IClient author, string command )
 	{
 		// Log.NetInfo( $"TFChatBox::AddClientVoiceCommand({author}, {command}" );
 		if ( Instance == null )

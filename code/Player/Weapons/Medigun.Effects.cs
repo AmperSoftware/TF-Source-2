@@ -1,5 +1,6 @@
 ﻿using Sandbox;
 using Amper.FPS;
+using Sandbox.Diagnostics;
 
 namespace TFS2;
 

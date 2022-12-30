@@ -184,7 +184,7 @@ public partial class VoiceMenu : Panel
 		AutoDismissTime = Time.Now + hud_voicemenu_dismiss_time;
 	}
 
-	[Event.BuildInput]
+	[Event.Client.BuildInput]
 	public void ProcessClientInput()
 	{
 		if ( Input.Pressed( InputButton.View ) )

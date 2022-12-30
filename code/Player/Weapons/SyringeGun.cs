@@ -12,7 +12,7 @@ public partial class SyringeGun : TFWeaponBase
 		// Syringes should be predictable, but we don't support that right now
 		// so just leave it as is.
 		// TODO: Implement clientside predicted projectiles.
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		GetProjectileFireSetup( MuzzleOffset, out var origin, out var direction );

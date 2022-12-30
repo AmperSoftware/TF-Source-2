@@ -20,7 +20,7 @@ public partial class InvisWatch : TFMeleeBase, IPassiveChild
 	public override bool CanPrimaryAttack() => false;
 
 	float StealthNextChangeTime;
-	public void PassiveSimulate( Client cl )
+	public void PassiveSimulate( IClient cl )
 	{
 		if ( !WishSecondaryAttack() )
 			return;

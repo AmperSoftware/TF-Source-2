@@ -11,11 +11,11 @@ public partial class TFHud : HudEntity<RootPanel>
 	{
 		Instance = this;
 
-		if ( IsClient )
+		if ( Game.IsClient )
 			RootPanel.SetTemplate( "/ui/HudController.html" );
 	}
 
-	[Event.Frame]
+	[Event.Client.Frame]
 	public void OnHudChangeEnabled()
 	{
 		if ( Enabled )

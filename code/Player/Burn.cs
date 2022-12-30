@@ -43,7 +43,7 @@ public partial class TFPlayer
 
 	public void Burn( TFPlayer attacker, TFWeaponBase weapon, float burningTime = 0 )
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		// Can't be burnt if already dead.
@@ -72,7 +72,7 @@ public partial class TFPlayer
 			setOnFire = true;
 
 			// Note the original attacker that put us in flames.
-			if ( attacker.IsValid() && !afterburnImmune ) 
+			if ( attacker.IsValid() && !afterburnImmune )
 			{
 				OriginalBurnAttacker = attacker;
 			}

@@ -10,7 +10,7 @@ partial class TFPlayer
 
 	public void TickUberchargeEffects()
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		//

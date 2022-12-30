@@ -1,6 +1,7 @@
 ﻿using Sandbox;
 using System;
 using Amper.FPS;
+using System.Linq;
 
 namespace TFS2;
 
@@ -31,7 +32,7 @@ partial class TFPlayer
 		// If we made a blast jump, provide passive resistance to the self inflicted damage.
 		//
 
-		if ( attacker == this && IsInAir && !InWater && info.Flags.HasFlag( TFDamageFlags.Blast ) )
+		if ( attacker == this && IsInAir && !InWater && info.HasTag( TFDamageFlags.Blast ) )
 		{
 			var res = PlayerClass.Abilities.BlastJumpDamageMultiplier;
 			info.Damage *= res;
@@ -41,13 +42,13 @@ partial class TFPlayer
 		// Ignite ourselves, if this damage has Ignite flag.
 		//
 
-		if ( info.Flags.HasFlag( TFDamageFlags.Ignite ) )
+		if ( info.HasTag( TFDamageFlags.Ignite ) )
 			BurnFromDamage( info );
 	}
 
 	public override void ApplyPushFromDamage( ExtendedDamageInfo info )
 	{
-		if ( info.Flags.HasFlag( TFDamageFlags.PreventPhysicsForce ) )
+		if ( info.HasTag( TFDamageFlags.PreventPhysicsForce ) )
 			return;
 
 		// Player can't be pushed by damage if they cant move.
@@ -70,10 +71,10 @@ partial class TFPlayer
 		// Modify the ducked hull size so we propel further.
 		if ( IsDucked )
 			hullSize.z = 55;
-
+		
 		if ( info.Attacker == this )
 		{
-			if ( info.Flags.HasFlag( TFDamageFlags.Blast ) )
+			if ( info.HasTag( TFDamageFlags.Blast ) )
 			{
 				forceScale = IsGrounded
 					? PlayerClass.Abilities.BlastJumpForceScaleGrounded
@@ -90,29 +91,29 @@ partial class TFPlayer
 		ApplyAbsoluteImpulse( dmgForce );
 	}
 
-	public override void OnTakeDamageEffects( Entity attacker, Entity weapon, float damage, DamageFlags flags, Vector3 position,  Vector3 force )
+	public override void OnTakeDamageEffects( Entity attacker, Entity weapon, float damage, string[] tags, Vector3 position,  Vector3 force )
 	{
 		if ( IsLocalPawn )
 		{
 			// For the player that has recieved this damage we play recieve 
 			// sound, to indicate that they have been hit with a crit.
-			if ( flags.HasFlag( TFDamageFlags.Critical ) )
+			if ( tags.Contains( TFDamageFlags.Critical ) )
 			{
 				Sound.FromScreen( CritReceivedSound );
 			}
 		}
 
-		if ( Local.Pawn == LastAttacker )
+		if ( Game.LocalPawn == LastAttacker )
 		{
 			// If local player is the attacker, and we dealt crit damage,
 			// play special reaction sounds as well as a particle.
 
-			if ( flags.HasFlag( TFDamageFlags.Critical ) )
+			if ( tags.Contains( TFDamageFlags.Critical ) )
 			{
 				Particles.Create( CritTextParticle, this, "head" );
 				Sound.FromScreen( CritHitSound );
 			}
-			else if ( flags.HasFlag( TFDamageFlags.MiniCritical ) )
+			else if ( tags.Contains( TFDamageFlags.MiniCritical ) )
 			{
 				Particles.Create( MiniCritTextParticle, this, "head" );
 				Sound.FromScreen( MiniCritHitSound );
@@ -137,7 +138,7 @@ partial class TFPlayer
 	public override bool ShouldBleedFromDamage( ExtendedDamageInfo info )
 	{
 		// Dont bleed from burning.
-		if ( info.Flags.HasFlag( TFDamageFlags.Ignite ) || info.Flags.HasFlag( TFDamageFlags.Burn ) )
+		if ( info.HasTag( TFDamageFlags.Ignite ) || info.HasTag( TFDamageFlags.Burn ) )
 			return false;
 
 		return true;
@@ -163,22 +164,22 @@ partial class TFPlayer
 		// if underwater, don't add additional spray
 		if ( IsUnderwater )
 			return;
-
-		var distance = (origin - Local.Pawn.EyePosition).Length;
+		
+		var distance = (origin - Game.LocalPawn.GetEyePosition()).Length;
 		var lodDistance = 0.25f * (distance / 512);
 
-		var vecForward = Local.Pawn.EyeRotation.Forward;
-		var vecRight = Local.Pawn.EyeRotation.Right;
+		var vecForward = Game.LocalPawn.GetEyeRotation().Forward;
+		var vecRight = Game.LocalPawn.GetEyeRotation().Right;
 		var dot = normal.Dot( vecForward );
 
 		if ( MathF.Abs( dot ) > 0.5f )
 		{
-			var push = Rand.Float( 0.5f, 1.5f ) + lodDistance;
+			var push = Game.Random.Float( 0.5f, 1.5f ) + lodDistance;
 			var rightDot = normal.Dot( vecRight );
 
 			// If we're up close, randomly move it around. If we're at a distance, always push it to the side
 			// Up close, this can move it back towards the view, but the random chance still looks better
-			if ( (distance >= 512 && rightDot > 0) || (distance < 512 && Rand.Float( 0, 1 ) > 0.5f) ) 
+			if ( (distance >= 512 && rightDot > 0) || (distance < 512 && Game.Random.Float( 0, 1 ) > 0.5f) ) 
 			{
 				// Turn it to the right
 				normal += vecRight * push;

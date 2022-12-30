@@ -72,7 +72,7 @@ partial class TeamFlagDisplay : Panel
 
 	public bool TryGetLocalPlayerPickedFlag( out Flag flag )
 	{
-		if ( Local.Pawn is TFPlayer player )
+		if ( Game.LocalPawn is TFPlayer player )
 		{
 			if ( player.PickedItem is Flag ent )
 			{
@@ -91,7 +91,7 @@ partial class TeamFlagDisplay : Panel
 		SetClass( "has_flag_red", flag.Team == TFTeam.Red );
 		SetClass( "has_flag_blue", flag.Team == TFTeam.Blue );
 
-		if ( Local.Pawn is TFPlayer player )
+		if ( Game.LocalPawn is TFPlayer player )
 		{
 			var zone = Entity.All.OfType<FlagCaptureZone>().Where( x => x.Team == player.Team ).FirstOrDefault();
 			if ( zone != null )
@@ -197,7 +197,7 @@ partial class TeamFlagCompass : Panel
 		if ( !IsVisible )
 			return;
 
-		if ( Local.Pawn is not TFPlayer pawn )
+		if ( Sandbox.Game.LocalPawn is not TFPlayer pawn )
 			return;
 
 		// rotation

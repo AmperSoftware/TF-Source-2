@@ -6,10 +6,10 @@ namespace TFS2;
 
 public partial class Loadout : BaseNetworkable
 {
-	public static Loadout LocalLoadout => ForClient( Local.Client );
-	static Dictionary<Client, Loadout> All { get; set; } = new();
+	public static Loadout LocalLoadout => ForClient( Game.LocalClient );
+	static Dictionary<IClient, Loadout> All { get; set; } = new();
 
-	public Client Client { get; set; }
+	public IClient Client { get; set; }
 	public LoadoutState State { get; set; }
 
 	LoadoutData Data { get; set; }
@@ -48,7 +48,7 @@ public partial class Loadout : BaseNetworkable
 	/// </summary>
 	/// <param name="client"></param>
 	/// <returns></returns>
-	public static Loadout ForClient( Client client )
+	public static Loadout ForClient( IClient client )
 	{
 		if ( client == null )
 			return null;
@@ -62,7 +62,7 @@ public partial class Loadout : BaseNetworkable
 		return el;
 	}
 
-	private Loadout( Client client )
+	private Loadout( IClient client )
 	{
 		State = LoadoutState.Invalid;
 		Client = client;
@@ -94,7 +94,7 @@ public partial class Loadout : BaseNetworkable
 		}
 		else
 		{
-			if ( Host.IsClient )
+			if ( Game.IsClient )
 			{
 				// if we're on the client, load data from disk.
 				LoadDataFromDisk();

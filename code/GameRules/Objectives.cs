@@ -31,7 +31,7 @@ partial class TFGameRules
 	{
 		FlagCaptures.Clear();
 
-		
+
 		// reset all objectives ents
 		foreach ( var flag in All.OfType<Flag>() ) flag.Reset();
 		foreach ( var point in ControlPoint.All ) point.Reset();
@@ -70,7 +70,7 @@ partial class TFGameRules
 			return false;
 
 		// if we're waiting for players, we can't cap.
-		if ( IsWaitingForPlayers ) 
+		if ( IsWaitingForPlayers )
 			return false;
 
 		return true;
@@ -104,9 +104,9 @@ partial class TFGameRules
 
 	public virtual bool MapSupportsGameType( TFGameType type )
 	{
-		switch(type)
+		switch ( type )
 		{
-			case TFGameType.Arena: 
+			case TFGameType.Arena:
 				return ArenaLogic != null;
 
 			case TFGameType.TeamDeathmatch:
@@ -123,7 +123,7 @@ partial class TFGameRules
 	{
 		base.SimulateGameplay();
 
-		if ( !IsServer ) 
+		if ( !Game.IsServer )
 			return;
 
 		CheckWinConditions();

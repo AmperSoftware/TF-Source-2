@@ -26,8 +26,8 @@ public class MainMenuPanel : Panel
 		if ( !IsVisible )
 			return;
 
-		PlayerName.Text = Local.Client.Name;
-		PlayerAvatar.SetTexture( $"avatarbig:{Local.Client.PlayerId}" );
+		PlayerName.Text = Sandbox.Game.LocalClient.Name;
+		PlayerAvatar.SetTexture( $"avatarbig:{Sandbox.Game.LocalClient.SteamId}" );
 	}
 
 	public void OnClickResumeGame()

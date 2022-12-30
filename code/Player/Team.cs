@@ -35,7 +35,7 @@ public partial class TFPlayer
 
 		// we don't have a preferred team, pick a random one.
 		if ( preferredTeam == TFTeam.Unassigned )
-			return Rand.Int( 0, 1 ) == 1 ? TFTeam.Red : TFTeam.Blue;
+			return Game.Random.Int( 0, 1 ) == 1 ? TFTeam.Red : TFTeam.Blue;
 
 		// return our preference.
 		return preferredTeam;

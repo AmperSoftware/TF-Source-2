@@ -16,7 +16,7 @@ namespace TFS2.UI;
 public partial class Scoreboard : Panel
 {
 	private Panel Container { get; set; }
-	private Dictionary<TFTeam, Dictionary<Client, Panel>> Players { get; set; } = new();
+	private Dictionary<TFTeam, Dictionary<IClient, Panel>> Players { get; set; } = new();
 	private Dictionary<TFTeam, Panel> Lists { get; set; } = new();
 
 	public Scoreboard()
@@ -68,7 +68,7 @@ public partial class Scoreboard : Panel
 			if ( !Players.ContainsKey( team ) )
 				Players[team] = new();
 
-			var teamClients = Client.All.Where( x => x.GetTeam() == team );
+			var teamClients = Sandbox.Game.Clients.Where( x => x.GetTeam() == team );
 
 			foreach ( var client in teamClients.Except( Players[team].Keys ) )
 				AddClient( client, team );
@@ -81,7 +81,7 @@ public partial class Scoreboard : Panel
 
 		#region Stats
 
-		var cl = Local.Client;
+		var cl = Sandbox.Game.LocalClient;
 		Kills.Text = cl.GetKills().ToString();
 		Deaths.Text = cl.GetDeaths().ToString();
 		Assists.Text = cl.GetAssists().ToString();
@@ -102,7 +102,7 @@ public partial class Scoreboard : Panel
 		#endregion Stats
 	}
 
-	public void AddClient( Client client, TFTeam team )
+	public void AddClient( IClient client, TFTeam team )
 	{
 		if ( team.IsPlayable() )
 		{
@@ -114,7 +114,7 @@ public partial class Scoreboard : Panel
 		}
 	}
 
-	public void RemoveClient( Client client, TFTeam team )
+	public void RemoveClient( IClient client, TFTeam team )
 	{
 		if ( Players[team].TryGetValue( client, out var row ) )
 		{
@@ -125,7 +125,7 @@ public partial class Scoreboard : Panel
 
 	private void OnRegenerate( PlayerRegenerateEvent args )
 	{
-		if ( args.Client != Local.Client )
+		if ( args.Client != Sandbox.Game.LocalClient )
 			return;
 
 		UpdatePlayerPreview();
@@ -133,7 +133,7 @@ public partial class Scoreboard : Panel
 
 	public void UpdatePlayerPreview()
 	{
-		MapName.Text = $"Playing on {Util.GetMapDisplayName( Global.MapName )}";
+		MapName.Text = $"Playing on {Util.GetMapDisplayName( Sandbox.Game.Server.MapIdent )}";
 
 		var player = TFPlayer.LocalPlayer;
 		if ( player == null )
@@ -142,7 +142,7 @@ public partial class Scoreboard : Panel
 		var team = player.Team;
 		var playerClass = player.PlayerClass;
 
-		PlayerName.Text = Local.DisplayName;
+		PlayerName.Text = Sandbox.Game.UserName;
 		PlayerName.Style.Set( "color", team == TFTeam.Red ? "#ea5251" : "#9ccbf5" );
 
 		if ( playerClass != null )
@@ -183,7 +183,7 @@ public partial class Scoreboard : Panel
 
 public class ScoreboardPlayerEntry : Panel
 {
-	public Client Client { get; set; }
+	public IClient Client { get; set; }
 	private TimeSince TimeSinceUpdate { get; set; }
 	private Image Avatar { get; set; }
 	private Label Name { get; set; }
@@ -204,7 +204,7 @@ public class ScoreboardPlayerEntry : Panel
 		if ( Client == null || !Client.IsValid() )
 			return;
 
-		Avatar.SetTexture( $"avatar:{Client.PlayerId}" );
+		Avatar.SetTexture( $"avatar:{Client.SteamId}" );
 		Name.Text = Client.Name;
 		Ping.Text = $"{Client.Ping}";
 		TimeSinceUpdate = 0;

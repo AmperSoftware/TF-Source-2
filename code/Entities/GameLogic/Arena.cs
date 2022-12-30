@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Editor;
 using Amper.FPS;
 using System;
 
@@ -8,8 +9,8 @@ namespace TFS2;
 [Title( "Arena" )]
 [Category("Gamemode")]
 [Icon("no_meeting_room")]
-[SandboxEditor.EditorSprite( "materials/editor/tf_logic_arena.vmat" )]
-[SandboxEditor.HammerEntity]
+[EditorSprite( "materials/editor/tf_logic_arena.vmat" )]
+[HammerEntity]
 
 public partial class Arena : BaseGameLogic
 {

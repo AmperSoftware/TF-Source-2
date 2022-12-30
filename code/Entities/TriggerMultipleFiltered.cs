@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Editor;
 
 namespace TFS2;
 
@@ -9,7 +10,7 @@ namespace TFS2;
 [Title("Trigger Multiple - Filtered")]
 [Category("Filters")]
 [Icon("done_all")]
-[SandboxEditor.HammerEntity]
+[HammerEntity]
 partial class TriggerMultipleFiltered : TriggerMultiple
 {
 	[Property( "filter_name", Title = "Filter Name" ), FGDType( "target_destination" )]

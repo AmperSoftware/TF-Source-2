@@ -68,7 +68,7 @@ partial class TFGameRules
 		return val;
 	}
 
-	public void ControlPointCaptured( ControlPoint point, TFTeam oldteam, TFTeam newteam, Client[] cappers )
+	public void ControlPointCaptured( ControlPoint point, TFTeam oldteam, TFTeam newteam, IClient[] cappers )
 	{
 		PlaySoundToAll( "ui.scored", SoundBroadcastChannel.Generic );
 

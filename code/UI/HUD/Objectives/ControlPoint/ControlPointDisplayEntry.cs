@@ -135,7 +135,7 @@ partial class ControlPointDisplayEntry : Panel
 		if ( !IsVisible )
 			return;
 
-		if ( Local.Pawn is TFPlayer player )
+		if ( Sandbox.Game.LocalPawn is TFPlayer player )
 		{
 			var isPointerVisible = player.ControlPoint == Point;
 			SetClass( "show_pointer", isPointerVisible );
@@ -216,7 +216,7 @@ partial class ControlPointDisplayEntry : Panel
 			float time = TimeSincePulseStart;
 
 			if ( time <= HalfPulseTime )
-				opacity = time.LerpInverse(0, HalfPulseTime);
+				opacity = time.LerpInverse( 0, HalfPulseTime );
 			else if ( time <= PulseTime )
 				opacity = 1 - time.LerpInverse( HalfPulseTime, PulseTime );
 			else

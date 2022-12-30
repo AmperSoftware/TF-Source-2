@@ -101,7 +101,7 @@ partial class TFGameRules
 		fallDamage *= ratio;
 
 		// TODO: Maybe remove randomness here? (Or allow it to be toggled)
-		fallDamage *= Rand.Float( 0.8f, 1.2f );
+		fallDamage *= Game.Random.Float( 0.8f, 1.2f );
 		return fallDamage;
 	}
 

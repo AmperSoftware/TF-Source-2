@@ -18,7 +18,7 @@ public class TauntMenu : Panel
 
 	public override void Tick()
 	{
-		if ( Local.Pawn is not TFPlayer player ) return;
+		if ( Game.LocalPawn is not TFPlayer player ) return;
 
 		SetClass( "open", Input.Down( InputButton.Drop ) );
 
@@ -34,7 +34,7 @@ public class TauntMenu : Panel
 	//If the player changes class or team, delete our existing taunt buttons and regenerate them
 	public void OnPlayerUpdated()
 	{
-		if ( Local.Pawn is not TFPlayer player ) return;
+		if ( Game.LocalPawn is not TFPlayer player ) return;
 
 		LastTeam = player.Team;
 		LastPlayerClass = player.PlayerClass;
@@ -58,7 +58,7 @@ public class TauntMenuButtons : Panel
 	{
 		//Add.Label( "General", "section" );
 
-		if ( Local.Pawn is not TFPlayer player ) return;
+		if ( Game.LocalPawn is not TFPlayer player ) return;
 
 		if ( player.PlayerClass == null ) return;
 

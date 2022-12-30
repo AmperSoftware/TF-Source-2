@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Editor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +8,10 @@ using Amper.FPS;
 namespace TFS2;
 
 [Library( "tf_control_point", Title = "Control Point", Group = "Objectives" )]
-[Title("Control Point")]
+[Title( "Control Point" )]
 [Category( "Objectives" )]
-[Icon("my_location")]
-[SandboxEditor.HammerEntity]
+[Icon( "my_location" )]
+[HammerEntity]
 public partial class ControlPoint : BaseTrigger
 {
 	public new static List<ControlPoint> All = new();
@@ -110,7 +111,7 @@ public partial class ControlPoint : BaseTrigger
 	[Event.Tick.Server]
 	public void CaptureThink()
 	{
-		if ( TimeSinceLastThink < 0.1f ) 
+		if ( TimeSinceLastThink < 0.1f )
 			return;
 
 		TimeSinceLastThink = 0;
@@ -119,7 +120,7 @@ public partial class ControlPoint : BaseTrigger
 		// Unlock
 		//
 
-		if ( Locked && UnlockTime > 0 && TFGameRules.Current.AreObjectivesActive() ) 
+		if ( Locked && UnlockTime > 0 && TFGameRules.Current.AreObjectivesActive() )
 		{
 			float remaining = UnlockTime - Time.Now;
 
@@ -132,7 +133,8 @@ public partial class ControlPoint : BaseTrigger
 					TFGameRules.PlaySoundToAll( $"announcer.begins.{seconds}sec", SoundBroadcastChannel.Soundtrack );
 
 				}
-			} else
+			}
+			else
 			{
 				Unlock();
 			}
@@ -144,7 +146,7 @@ public partial class ControlPoint : BaseTrigger
 
 		// Points aren't allowed to be captured. If we were 
 		// being captured, we need to clean up and reset.
-		if ( !TFGameRules.Current.PointsMayBeCaptured() ) 
+		if ( !TFGameRules.Current.PointsMayBeCaptured() )
 		{
 			if ( IsBeingCaptured ) BreakCapture( false );
 			return;
@@ -246,7 +248,7 @@ public partial class ControlPoint : BaseTrigger
 			if ( CaptureModeScalesWithPlayers() )
 			{
 				// Increase the reduction harmonically (https://en.wikipedia.org/wiki/Harmonic_number)
-				for ( int i = 1; i < NumberTouchers[TeamInZone]; i++ ) 
+				for ( int i = 1; i < NumberTouchers[TeamInZone]; i++ )
 				{
 					reduction += flDelta / (i + 1);
 				}
@@ -291,7 +293,7 @@ public partial class ControlPoint : BaseTrigger
 			else
 			{
 				// if none of the teams are on the point, or it belongs to someone
-				if ( TFGameRules.Current.TeamMayCapturePoint( CapturingTeam, this ) ) 
+				if ( TFGameRules.Current.TeamMayCapturePoint( CapturingTeam, this ) )
 				{
 					// passively revert the progress
 					float flDecrease = TimeToCapture / mp_capdeteriorate_time / numPlayersToCap;
@@ -311,7 +313,7 @@ public partial class ControlPoint : BaseTrigger
 			{
 				FinishCapturing( CapturingTeam );
 				return;
-			} 
+			}
 			else
 			{
 				// Avoid issues when multiple players are on the point at the same time when it is enabled
@@ -332,7 +334,7 @@ public partial class ControlPoint : BaseTrigger
 			{
 				foreach ( TFTeam team in Enum.GetValues( typeof( TFTeam ) ) )
 				{
-					if ( !CanTeamCapture( team ) || OwnerTeam == team ) 
+					if ( !CanTeamCapture( team ) || OwnerTeam == team )
 						continue;
 
 					if ( NumberTouchers[team] == 0 )
@@ -387,10 +389,10 @@ public partial class ControlPoint : BaseTrigger
 
 	public void StartCapturing( TFTeam team )
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		// owner team cannot start contesting this point.
-		if ( team == OwnerTeam ) 
+		if ( team == OwnerTeam )
 			return;
 
 		switch ( team )
@@ -410,7 +412,7 @@ public partial class ControlPoint : BaseTrigger
 
 	public void FinishCapturing( TFTeam team )
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		switch ( team )
 		{
@@ -434,11 +436,11 @@ public partial class ControlPoint : BaseTrigger
 
 	public void BreakCapture( bool bNotEnoughPlayers )
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		if ( !IsBeingCaptured )
 			return;
-		
+
 		// Remap team to get first game team = 1
 		switch ( CapturingTeam )
 		{
@@ -457,7 +459,7 @@ public partial class ControlPoint : BaseTrigger
 	{
 		base.StartTouch( other );
 
-		if ( !IsServer ) 
+		if ( !Game.IsServer )
 			return;
 
 		if ( other is TFPlayer player )
@@ -478,7 +480,7 @@ public partial class ControlPoint : BaseTrigger
 	{
 		base.EndTouch( other );
 
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		if ( other is TFPlayer player )
@@ -493,7 +495,7 @@ public partial class ControlPoint : BaseTrigger
 
 	public int GetNumberOfTeamPlayersRequiredToCap( TFTeam team )
 	{
-		switch( team )
+		switch ( team )
 		{
 			case TFTeam.Red: return NumberOfRedToCapture;
 			case TFTeam.Blue: return NumberOfBlueToCapture;
@@ -539,7 +541,7 @@ public partial class ControlPoint : BaseTrigger
 	[Input]
 	public void Reset()
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		CapturingTeam = TFTeam.Unassigned;
 		TimeRemaining = 0;
@@ -566,7 +568,7 @@ public partial class ControlPoint : BaseTrigger
 	/// Sets the owner team and stops current capture progress.
 	/// </summary>
 	/// <param name="team">The new owner team</param>
-	[Input("SetOwner")]
+	[Input( "SetOwner" )]
 	public void SetOwnerTeam( TFTeam team )
 	{
 		BreakCapture( false );
@@ -574,12 +576,12 @@ public partial class ControlPoint : BaseTrigger
 
 		// prevent setting team value to spectator accidentally.
 		// spectators can't control this point.
-		if ( team == TFTeam.Spectator ) 
+		if ( team == TFTeam.Spectator )
 			team = TFTeam.Unassigned;
 
 		if ( team != OwnerTeam )
 		{
-			switch( team )
+			switch ( team )
 			{
 				case TFTeam.Unassigned:
 					OnOwnerReset.Fire( this );
@@ -600,7 +602,7 @@ public partial class ControlPoint : BaseTrigger
 	[Input]
 	public void SetLocked( bool locked )
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		if ( locked ) Lock();
 		else Unlock();
@@ -608,7 +610,7 @@ public partial class ControlPoint : BaseTrigger
 
 	public void Lock()
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		if ( !Locked )
 			OnLocked.Fire( this );
@@ -626,7 +628,7 @@ public partial class ControlPoint : BaseTrigger
 
 	public void Unlock( float time = 0 )
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		if ( time > 0 )
 		{
@@ -658,7 +660,7 @@ public partial class ControlPoint : BaseTrigger
 
 	Dictionary<TFPlayer, TimeSince> timeSinceBlock = new();
 	const float defensePointResetTime = 30;
-	void TryAwardDefensePoints(TFPlayer ply)
+	void TryAwardDefensePoints( TFPlayer ply )
 	{
 		if ( !timeSinceBlock.ContainsKey( ply ) )
 			timeSinceBlock.Add( ply, defensePointResetTime + 1 );

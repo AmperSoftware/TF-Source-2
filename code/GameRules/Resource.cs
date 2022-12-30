@@ -5,7 +5,7 @@ namespace TFS2;
 
 partial class TFGameRules
 {
-	public override void UpdateClientData( Client client, SDKPlayer player )
+	public override void UpdateClientData(IClient client, SDKPlayer player )
 	{
 		base.UpdateClientData( client, player );
 
@@ -13,7 +13,7 @@ partial class TFGameRules
 			UpdateClientData( client, pawn );
 	}
 
-	public void UpdateClientData( Client client, TFPlayer player )
+	public void UpdateClientData( IClient client, TFPlayer player )
 	{
 		var playerClass = "";
 		if ( player.PlayerClass != null )
@@ -45,28 +45,28 @@ partial class TFGameRules
 
 public static class ClientExtensions
 {
-	public static float GetHealth( this Client client ) => client.GetValue<float>( "f_health" );
-	public static bool IsAlive( this Client client ) => client.GetValue<bool>( "b_alive" );
-	public static TFTeam GetTeam( this Client client ) => (TFTeam)client.GetValue<int>( "n_teamnumber" );
-	public static PlayerClass GetPlayerClass( this Client client ) => ResourceLibrary.Get<PlayerClass>( client.GetValue<string>( "s_playerclass" ) );
+	public static float GetHealth( this IClient client ) => client.GetValue<float>( "f_health" );
+	public static bool IsAlive( this IClient client ) => client.GetValue<bool>( "b_alive" );
+	public static TFTeam GetTeam( this IClient client ) => (TFTeam)client.GetValue<int>( "n_teamnumber" );
+	public static PlayerClass GetPlayerClass( this IClient client ) => ResourceLibrary.Get<PlayerClass>( client.GetValue<string>( "s_playerclass" ) );
 
 	#region Stats
-	public static int GetPoints( this Client client ) => client.GetInt( "i_points" );
-	public static int GetKills( this Client client ) => client.GetInt( "i_kills" );
-	public static int GetDeaths( this Client client ) => client.GetInt( "i_deaths" );
-	public static int GetAssists( this Client client ) => client.GetInt( "i_assists" );
-	public static int GetDestructions( this Client client ) => client.GetInt( "i_destructions" );
-	public static int GetCaptures( this Client client ) => client.GetInt( "i_captures" );
-	public static int GetDefenses( this Client client ) => client.GetInt( "i_defenses" );
-	public static int GetDominations( this Client client ) => client.GetInt( "i_dominations" );
-	public static int GetRevenges( this Client client ) => client.GetInt( "i_revenges" );
-	public static int GetInvulns( this Client client ) => client.GetInt( "i_invulns" );
-	public static int GetHeadshots( this Client client ) => client.GetInt( "i_headshots" );
-	public static int GetTeleports( this Client client ) => client.GetInt( "i_teleports" );
-	public static int GetHealing( this Client client ) => client.GetInt( "i_healing" );
-	public static int GetBackstabs( this Client client ) => client.GetInt( "i_backstabs" );
-	public static int GetBonus( this Client client ) => client.GetInt( "i_bonus" );
-	public static int GetSupport( this Client client ) => client.GetInt( "i_support" );
-	public static int GetDamage( this Client client ) => client.GetInt( "i_damage" );
+	public static int GetPoints( this IClient client ) => client.GetInt( "i_points" );
+	public static int GetKills( this IClient client ) => client.GetInt( "i_kills" );
+	public static int GetDeaths( this IClient client ) => client.GetInt( "i_deaths" );
+	public static int GetAssists( this IClient client ) => client.GetInt( "i_assists" );
+	public static int GetDestructions( this IClient client ) => client.GetInt( "i_destructions" );
+	public static int GetCaptures( this IClient client ) => client.GetInt( "i_captures" );
+	public static int GetDefenses( this IClient client ) => client.GetInt( "i_defenses" );
+	public static int GetDominations( this IClient client ) => client.GetInt( "i_dominations" );
+	public static int GetRevenges( this IClient client ) => client.GetInt( "i_revenges" );
+	public static int GetInvulns( this IClient client ) => client.GetInt( "i_invulns" );
+	public static int GetHeadshots( this IClient client ) => client.GetInt( "i_headshots" );
+	public static int GetTeleports( this IClient client ) => client.GetInt( "i_teleports" );
+	public static int GetHealing( this IClient client ) => client.GetInt( "i_healing" );
+	public static int GetBackstabs( this IClient client ) => client.GetInt( "i_backstabs" );
+	public static int GetBonus( this IClient client ) => client.GetInt( "i_bonus" );
+	public static int GetSupport( this IClient client ) => client.GetInt( "i_support" );
+	public static int GetDamage( this IClient client ) => client.GetInt( "i_damage" );
 	#endregion
 }

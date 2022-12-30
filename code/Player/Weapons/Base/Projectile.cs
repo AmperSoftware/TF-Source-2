@@ -40,7 +40,7 @@ public partial class TFProjectile : Projectile
 
 	public virtual void Deflected( TFWeaponBase weapon, TFPlayer who )
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		TeamNumber = who.TeamNumber;

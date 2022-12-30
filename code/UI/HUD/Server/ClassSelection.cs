@@ -16,7 +16,7 @@ public class ClassSelection : MenuOverlay
 
 	public ClassSelection()
 	{
-		if ( Local.Pawn is not TFPlayer player ) return;
+		if ( Sandbox.Game.LocalPawn is not TFPlayer player ) return;
 
 		// TODO: Convert to HTML
 		StyleSheet.Load( "/UI/HUD/Server/ClassSelection.scss" );
@@ -114,7 +114,7 @@ public class ClassSelectionBackgroundScene : ScenePanel
 		// All playable classes.
 		//
 
-		if ( Local.Pawn is TFPlayer player )
+		if ( Sandbox.Game.LocalPawn is TFPlayer player )
 		{
 			var team = player.Team;
 			foreach ( TFPlayerClass value in Enum.GetValues( typeof( TFPlayerClass ) ) )
@@ -201,7 +201,7 @@ public class ClassSelectionPlayerModel : ScenePanel
 
 	public async void PreviewClass( PlayerClass pclass )
 	{
-		if ( Local.Pawn is not TFPlayer player ) return;
+		if ( Sandbox.Game.LocalPawn is not TFPlayer player ) return;
 
 		SelectedClass = pclass;
 
@@ -226,7 +226,7 @@ public class ClassSelectionPlayerModel : ScenePanel
 		//
 
 		// Fetch the player's inventory for the weapon preview...
-		Loadout loadout = Loadout.ForClient( Local.Client );
+		Loadout loadout = Loadout.ForClient( Sandbox.Game.LocalClient );
 		// and get the weapon for the preview slot.
 		WeaponData previewWeapon = await loadout.GetLoadoutItem( pclass, GetPreviewWeaponSlot() );
 		if ( previewWeapon == null ) return;
@@ -298,7 +298,7 @@ public class ClassSelectionButton : Label
 		};
 	}
 
-	[Event.BuildInput]
+	[Event.Client.BuildInput]
 	public void ProcessClientInput()
 	{
 		if ( Input.Pressed( GetShortcutButton() ) )
@@ -321,7 +321,7 @@ public class ClassSelectionButton : Label
 
 		if ( PlayerClass == null )
 			// Pick a random class
-			ConsoleSystem.Run( "tf_join_class", Rand.FromList( PlayerClass.All.Select( kv => kv.Key ).ToList() ) );
+			ConsoleSystem.Run( "tf_join_class", Sandbox.Game.Random.FromList( PlayerClass.All.Select( kv => kv.Key ).ToList() ) );
 		else
 			ConsoleSystem.Run( "tf_join_class", PlayerClass.ResourceName );
 

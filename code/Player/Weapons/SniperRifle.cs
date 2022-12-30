@@ -197,7 +197,7 @@ partial class SniperRifle : TFWeaponBase
 			speed = ScopedMaxSpeed;
 	}
 
-	public override void Simulate( Client client )
+	public override void Simulate( IClient client )
 	{
 		base.Simulate( client );
 

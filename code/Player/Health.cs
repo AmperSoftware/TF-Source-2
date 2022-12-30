@@ -24,7 +24,7 @@ partial class TFPlayer
 
 	public void Heal( Entity healer, float amount, float overhealBonus, float overhealDecayMult )
 	{
-		if ( !IsServer ) 
+		if ( !Game.IsServer )
 			return;
 
 		float accumHeal = StopHealingFrom( healer );
@@ -46,7 +46,7 @@ partial class TFPlayer
 
 	public float StopHealingFrom( Entity healer )
 	{
-		if ( !IsServer ) 
+		if ( !Game.IsServer )
 			return 0;
 
 		if ( !healer.IsValid() )
@@ -83,7 +83,7 @@ partial class TFPlayer
 
 	public void TickHealing()
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		// go through all current healers
@@ -127,10 +127,10 @@ partial class TFPlayer
 		// Passive health regen
 		//
 
-		if ( Health < GetMaxHealth() ) 
+		if ( Health < GetMaxHealth() )
 		{
 			var healthRegenAmount = PlayerClass.Abilities.AutoRegenHealth;
-			if ( healthRegenAmount > 0 && TimeSinceHealthRegenerated >= 1 ) 
+			if ( healthRegenAmount > 0 && TimeSinceHealthRegenerated >= 1 )
 			{
 				// Log.Info($"Base health regen: {amount}");
 				var totalTime = PlayerClass.Abilities.AutoRegenPeakTime;
@@ -151,7 +151,7 @@ partial class TFPlayer
 		var maxHealth = GetMaxHealth();
 		var maxOverheal = GetMaxOverheal();
 
-		if ( Health <= maxHealth ) 
+		if ( Health <= maxHealth )
 			return;
 
 		// Items exist that get us over max health, without ever being healed, in which case our m_flBestOverhealDecayMult will still be -1.

@@ -10,7 +10,7 @@ namespace TFS2;
 /// </summary>
 public partial class TFPlayer : SDKPlayer
 {
-	public new static TFPlayer LocalPlayer => Local.Pawn as TFPlayer;
+	public new static TFPlayer LocalPlayer => Game.LocalPawn as TFPlayer;
 	public override float DeathAnimationTime => 2;
 
 	public TFPlayer()
@@ -78,7 +78,7 @@ public partial class TFPlayer : SDKPlayer
 	/// </summary>
 	public void Regenerate( bool full = false )
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		using var _ = Prediction.Off();
@@ -148,7 +148,7 @@ public partial class TFPlayer : SDKPlayer
 
 		RegenerateAllWeapons();
 
-		if ( !ActiveWeapon.IsValid() ) 
+		if ( !ActiveWeapon.IsValid() )
 			SwitchToNextBestWeapon();
 	}
 
@@ -219,7 +219,7 @@ public partial class TFPlayer : SDKPlayer
 		}
 	}
 
-	public override void Simulate( Client cl )
+	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
 
@@ -325,7 +325,7 @@ public partial class TFPlayer : SDKPlayer
 
 	protected override void OnDestroy()
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		DropPickedItem();
@@ -364,7 +364,7 @@ public partial class TFPlayer : SDKPlayer
 
 	public override float CalculateMaxSpeed()
 	{
-		if ( !PlayerClass.IsValid() ) 
+		if ( !PlayerClass.IsValid() )
 			return 0;
 
 		var maxSpeed = PlayerClass.MaxSpeed;
@@ -400,14 +400,14 @@ public partial class TFPlayer : SDKPlayer
 			? 1
 			: 0;
 
-		if( Invisibility > 0f )
+		if ( Invisibility > 0f )
 		{
 			baseSkin += 4;
 		}
 		else if ( IsInvulnerable() )
 		{
 			baseSkin += 2;
-		}	
+		}
 
 		SetMaterialGroup( baseSkin );
 	}

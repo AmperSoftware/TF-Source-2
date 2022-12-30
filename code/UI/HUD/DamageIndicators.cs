@@ -15,14 +15,14 @@ public class DamageIndicators : Panel
 
 	public void OnHurt( PlayerHurtEvent args )
 	{
-		if ( args.Victim != Local.Client )
+		if ( args.Victim != Sandbox.Game.LocalClient )
 			return;
 
 		// If local client is not alive
-		if ( !Local.Client.IsAlive() )
+		if ( !Sandbox.Game.LocalClient.IsAlive() )
 			return;
 
-		AddChild( new DamageIndicatorEntry( (args.Position - Local.Pawn.EyePosition).Normal, args.Damage ) );
+		AddChild( new DamageIndicatorEntry( (args.Position - Sandbox.Game.LocalPawn.GetEyePosition()).Normal, args.Damage ) );
 	}
 }
 
@@ -36,12 +36,12 @@ public class DamageIndicatorEntry : Panel
 	public DamageIndicatorEntry( Vector3 direction, float damage )
 	{
 		TimeSinceCreated = 0;
-		Deviation = Rand.Float( -3, 3 );
+		Deviation = Sandbox.Game.Random.Float( -3, 3 );
 	}
 
 	public override void Tick()
 	{
-		if ( Local.Pawn is not TFPlayer pawn ) return;
+		if ( Sandbox.Game.LocalPawn is not TFPlayer pawn ) return;
 
 		float time = TimeSinceCreated;
 		var origin = pawn.EyePosition + Offset;

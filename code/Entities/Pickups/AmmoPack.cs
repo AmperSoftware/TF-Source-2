@@ -1,4 +1,5 @@
 using Sandbox;
+using Editor;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -75,7 +76,7 @@ public abstract class AmmoPack : PickupItem
 [Category( "Pickups" )]
 [Icon( "backpack" )]
 [EditorModel( "models/items/ammopack_small.vmdl" )]
-[SandboxEditor.HammerEntity]
+[HammerEntity]
 public class AmmoPackSmall : AmmoPack
 {
 	public override string ModelPath => "models/items/ammopack_small.vmdl";
@@ -87,7 +88,7 @@ public class AmmoPackSmall : AmmoPack
 [Category( "Pickups" )]
 [Icon( "backpack" )]
 [EditorModel( "models/items/ammopack_medium.vmdl" )]
-[SandboxEditor.HammerEntity]
+[HammerEntity]
 public class AmmoPackMedium : AmmoPack
 {
 	public override string ModelPath => "models/items/ammopack_medium.vmdl";
@@ -99,7 +100,7 @@ public class AmmoPackMedium : AmmoPack
 [Category( "Pickups" )]
 [Icon("backpack")]
 [EditorModel( "models/items/ammopack_large.vmdl" )]
-[SandboxEditor.HammerEntity]
+[HammerEntity]
 public class AmmoPackFull : AmmoPack
 {
 	public override string ModelPath => "models/items/ammopack_large.vmdl";

@@ -92,7 +92,7 @@ partial class TFPlayer
 		Invisibility = TargetInvis;
 		UpdateMaterialGroup();
 
-		if ( IsClient )
+		if ( Game.IsClient )
 		{
 			//Apply visual changes on client
 			float invisBlend = 1f - Invisibility;
@@ -116,26 +116,26 @@ partial class TFPlayer
 	/// <summary>
 	/// Test command to toggle invisibility on all players
 	/// </summary>
-	[ConCmd.Admin("tf_test_invis")]
-    private static void Invis_Cmd()
-    {
-        var players = Entity.All.OfType<TFPlayer>();
-        foreach (var player in players)
-        {
-			if (PlayerClass.Entries[player.PlayerClass.Title] != TFPlayerClass.Spy) continue;
+	[ConCmd.Admin( "tf_test_invis" )]
+	private static void Invis_Cmd()
+	{
+		var players = Entity.All.OfType<TFPlayer>();
+		foreach ( var player in players )
+		{
+			if ( PlayerClass.Entries[player.PlayerClass.Title] != TFPlayerClass.Spy ) continue;
 
-            bool invis = player.InCondition(TFCondition.Cloaked);
-            if (invis)
-            {
-                player.RemoveCondition(TFCondition.Cloaked);
-                Log.Info("Removed invis");
-            }
-            else
-            {
-                player.AddCondition(TFCondition.Cloaked);
-                Log.Info("Added invis");
-            }
-        }
-    }
+			bool invis = player.InCondition( TFCondition.Cloaked );
+			if ( invis )
+			{
+				player.RemoveCondition( TFCondition.Cloaked );
+				Log.Info( "Removed invis" );
+			}
+			else
+			{
+				player.AddCondition( TFCondition.Cloaked );
+				Log.Info( "Added invis" );
+			}
+		}
+	}
 #endif
 }

@@ -2,6 +2,7 @@
 using Amper.FPS;
 using System.Collections.Generic;
 using System;
+using Sandbox.Diagnostics;
 
 namespace TFS2;
 
@@ -14,7 +15,7 @@ public partial class FlameThrower : TFHoldWeaponBase
 
 	public override void Attack()
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		//
@@ -199,7 +200,7 @@ public partial class FlameThrower : TFHoldWeaponBase
 
 	public void DeflectEntities()
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		var player = TFOwner;
@@ -240,7 +241,7 @@ public partial class FlameThrower : TFHoldWeaponBase
 				continue;
 
 			// See if we have a line of sight to that entity.
-			var tr = Trace.Ray( player.EyePosition, ent.EyePosition )
+			var tr = Trace.Ray( player.EyePosition, ent.GetEyePosition() )
 				.Ignore( Owner )
 				.Ignore( ent )
 				.WithAnyTags( CollisionTags.Solid )
@@ -278,7 +279,7 @@ public partial class FlameThrower : TFHoldWeaponBase
 			return false;
 
 		var curSpeed = target.Velocity.Length;
-		var startPos = Owner.EyePosition;
+		var startPos = Owner.GetEyePosition();
 		var endPos = startPos + forward * AirblastDeflectTraceRange;
 
 		var tr = Trace.Ray( startPos, endPos )
@@ -294,7 +295,7 @@ public partial class FlameThrower : TFHoldWeaponBase
 		var vecDir = tr.EndPosition - target.WorldSpaceBounds.Center;
 
 		// If projectile has physics movement and it's currently stationary
-		if ( target.MoveType == ProjectileMoveType.Physics ) 
+		if ( target.MoveType == ProjectileMoveType.Physics )
 		{
 			curSpeed = target.PhysicsBody.Velocity.Length;
 
@@ -309,7 +310,7 @@ public partial class FlameThrower : TFHoldWeaponBase
 		var vecVel = vecDir * curSpeed;
 
 		target.Velocity = vecVel;
-		target.Deflected( this, TFOwner );;
+		target.Deflected( this, TFOwner ); ;
 
 		return true;
 	}
@@ -326,7 +327,7 @@ public partial class FlameThrower : TFHoldWeaponBase
 		// If we're deflecting a teammate.
 		//
 
-		if ( Owner != target && ITeam.IsSame( target, Owner ) ) 
+		if ( Owner != target && ITeam.IsSame( target, Owner ) )
 		{
 			if ( target.Extinguish( this ) )
 			{
@@ -350,7 +351,7 @@ public partial class FlameThrower : TFHoldWeaponBase
 		vecToTarget = vecToTarget.Normal;
 
 		// if we are airblasting ourselves, airblast us in the durection of where we're looking.
-		if ( target == Owner ) 
+		if ( target == Owner )
 			vecToTarget = forward;
 
 		var force = vecToTarget * tf_flamethrower_airblast_force;
@@ -358,10 +359,10 @@ public partial class FlameThrower : TFHoldWeaponBase
 		// EXPERIMENTAL: Airblasting reflects from surfaces.
 		if ( tf_flamethrower_airblast_reflective )
 		{
-			var startPos = Owner.EyePosition;
+			var startPos = Owner.GetEyePosition();
 			var endPos = startPos + forward * tf_flamethrower_airblast_reflective_distance;
 
-			var tr = Trace.Ray( Owner.EyePosition, endPos )
+			var tr = Trace.Ray( Owner.GetEyePosition(), endPos )
 				.WithAnyTags( CollisionTags.Solid )
 				.WithoutTags( CollisionTags.Player )
 				.Ignore( Owner )
@@ -374,8 +375,8 @@ public partial class FlameThrower : TFHoldWeaponBase
 
 				// Reflection power scales by distance
 				var distToTarget = targetPos.Distance( tr.EndPosition );
-				var reflectForce = distToTarget.RemapVal( 
-					0, tf_flamethrower_airblast_reflective_target_range, 
+				var reflectForce = distToTarget.RemapVal(
+					0, tf_flamethrower_airblast_reflective_target_range,
 					tf_flamethrower_airblast_reflective_force, 0 );
 
 				if ( reflectForce > 0 )
@@ -390,7 +391,7 @@ public partial class FlameThrower : TFHoldWeaponBase
 
 		force.z = MathF.Max( force.z, tf_flamethrower_airblast_min_z_force );
 
-		target.ApplyViewPunchImpulse( Rand.Float( 10, 15 ) );
+		target.ApplyViewPunchImpulse( Game.Random.Float( 10, 15 ) );
 		target.ApplyAbsoluteImpulse( force );
 		return true;
 	}
@@ -567,7 +568,7 @@ public virtual int AirblastCost => 20;
 
 
 		// This part is calculated server only.
-		if ( IsServer )
+		if ( Game.IsServer )
 		{
 			using ( Prediction.Off() )
 			{

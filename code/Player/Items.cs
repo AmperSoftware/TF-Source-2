@@ -14,7 +14,7 @@ namespace TFS2
 
 		public virtual void SimulateItems()
 		{
-			if ( IsServer && PickedItem != null )
+			if ( Game.IsServer && PickedItem != null )
 			{
 				if ( WishDrop() )
 				{
@@ -35,7 +35,7 @@ namespace TFS2
 
 		public void DropPickedItem()
 		{
-			if ( !IsServer )
+			if ( !Game.IsServer )
 				return;
 
 			if ( PickedItem == null )

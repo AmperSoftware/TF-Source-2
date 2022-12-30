@@ -109,7 +109,7 @@ public partial class Medigun : TFHoldWeaponBase //, IPassiveChild
 		SendPlayerAnimParameter( "b_fire_hold", false );
 		SendViewModelAnimParameter( "b_beam_detach" );
 	}
-	
+
 	public bool FindHoveredPatientCandidate( out TFPlayer patient )
 	{
 		patient = null;
@@ -144,7 +144,7 @@ public partial class Medigun : TFHoldWeaponBase //, IPassiveChild
 
 	public bool IsInLOS( TFPlayer target )
 	{
-		var tr = Trace.Ray( Owner.EyePosition, target.EyePosition )
+		var tr = Trace.Ray( Owner.GetEyePosition(), target.EyePosition )
 			.Ignore( this )
 			.Ignore( Owner )
 			.WithoutTags( CollisionTags.Player )
@@ -201,7 +201,7 @@ public partial class Medigun : TFHoldWeaponBase //, IPassiveChild
 		// predicted, only calculate it on the server.
 		//
 
-		if ( IsServer )
+		if ( Game.IsServer )
 		{
 			Patient.Heal( this, GetHealRate(), 1, 1 );
 

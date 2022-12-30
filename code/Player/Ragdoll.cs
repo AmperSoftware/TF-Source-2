@@ -27,7 +27,7 @@ partial class TFPlayer
 		if ( Model == null )
 			return;
 
-		var angImpulse = new Vector3( Rand.Float( 0, 120 ), Rand.Float( 0, 120 ), 0 );
+		var angImpulse = new Vector3( Game.Random.Float( 0, 120 ), Game.Random.Float( 0, 120 ), 0 );
 
 		var breakList = Model.GetData<ModelBreakPiece[]>();
 		foreach ( var gib in breakList )
@@ -41,9 +41,9 @@ partial class TFPlayer
 			model.CopyMaterialGroup( this );
 
 			var breakVelocity = Vector3.Zero;
-			breakVelocity.z = Rand.Float( 0, tf_playergib_force );
-			breakVelocity.x = Rand.Float( -tf_playergib_force / 2, tf_playergib_force / 2 );
-			breakVelocity.y = Rand.Float( -tf_playergib_force / 2, tf_playergib_force / 2 );
+			breakVelocity.z = Game.Random.Float( 0, tf_playergib_force );
+			breakVelocity.x = Game.Random.Float( -tf_playergib_force / 2, tf_playergib_force / 2 );
+			breakVelocity.y = Game.Random.Float( -tf_playergib_force / 2, tf_playergib_force / 2 );
 
 			model.ApplyAbsoluteImpulse( breakVelocity );
 			model.ApplyLocalAngularImpulse( angImpulse );
@@ -122,7 +122,7 @@ partial class TFRagdoll : ModelEntity
 	public override void Spawn()
 	{
 		// This is a client only entity.
-		Host.AssertClient();
+		Game.AssertClient();
 
 		Tags.Add( CollisionTags.Debris );
 
@@ -139,7 +139,7 @@ partial class TFGib : ModelEntity
 	public override void Spawn()
 	{
 		// This is a client only entity.
-		Host.AssertClient();
+		Game.AssertClient();
 
 		Tags.Add( CollisionTags.Debris );
 
@@ -156,7 +156,7 @@ partial class TFGib : ModelEntity
 	Vector3 LastDecalPosition { get; set; }
 	[ConVar.Client] public static float tf_gibs_decal_interval { get; set; } = 16;
 
-	[Event.Frame]
+	[Event.Client.Frame]
 	public void Frame()
 	{
 		//

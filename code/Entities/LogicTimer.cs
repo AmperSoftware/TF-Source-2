@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using Editor;
 
 namespace TFS2;
 
@@ -10,9 +11,9 @@ namespace TFS2;
 [Title("Round Timer")]
 [Category("Gameplay")]
 [Icon("timer")]
-[SandboxEditor.VisGroup( SandboxEditor.VisGroup.Logic )]
-[SandboxEditor.EditorSprite( "materials/editor/ent_logic.vmat" )]
-[SandboxEditor.HammerEntity]
+[VisGroup( VisGroup.Logic )]
+[EditorSprite( "materials/editor/ent_logic.vmat" )]
+[HammerEntity]
 public partial class LogicTimer : Entity
 {
 	/// <summary>
@@ -90,7 +91,7 @@ public partial class LogicTimer : Entity
 	{
 		if(RandomizeTime)
 		{
-			timeToPass = Rand.Float( MinTime, MaxTime ).Clamp(0, MaxTime);
+			timeToPass = Game.Random.Float( MinTime, MaxTime ).Clamp(0, MaxTime);
 		}
 		else
 		{

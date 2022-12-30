@@ -9,7 +9,7 @@ public class RocketLauncher : TFWeaponBase
 
 	public override void Attack()
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		GetProjectileFireSetup( MuzzleOffset, out var origin, out var direction, false );

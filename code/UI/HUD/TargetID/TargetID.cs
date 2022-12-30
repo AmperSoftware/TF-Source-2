@@ -151,7 +151,7 @@ public partial class TargetID : Panel
 		Noone
 	}
 
-	public bool CanSeeAvatarOf( Client client )
+	public bool CanSeeAvatarOf( IClient client )
 	{
 		switch ( hud_target_id_show_avatars )
 		{
@@ -159,7 +159,7 @@ public partial class TargetID : Panel
 				return true;
 
 			case AvatarVisibility.Friends:
-				var friend = new Friend( client.PlayerId );
+				var friend = new Friend( client.SteamId );
 				return friend.IsFriend;
 
 			default:

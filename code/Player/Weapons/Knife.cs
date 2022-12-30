@@ -52,10 +52,10 @@ public partial class Knife : TFMeleeBase
 		var vecToTarget = (target.WorldSpaceBounds.Center - Owner.WorldSpaceBounds.Center).WithZ( 0 ).Normal;
 
 		// Get owner forward view vector
-		var vecOwnerForward = Owner.EyeRotation.Forward.WithZ( 0 ).Normal;
+		var vecOwnerForward = Owner.GetEyeRotation().Forward.WithZ( 0 ).Normal;
 
 		// Get target forward view vector
-		var vecTargetForward = target.EyeRotation.Forward.WithZ( 0 ).Normal;
+		var vecTargetForward = target.GetEyeRotation().Forward.WithZ( 0 ).Normal;
 
 		// Make sure owner is behind, facing and aiming at target's back
 		float flPosVsTargetViewDot = vecToTarget.Dot( vecTargetForward ); // Behind?
@@ -79,7 +79,7 @@ public partial class Knife : TFMeleeBase
 
 	public bool CanPerformBackstabAgainstTarget( SDKPlayer entity )
 	{
-		if ( !entity.IsValid())
+		if ( !entity.IsValid() )
 			return false;
 
 		if ( !SDKGame.mp_friendly_fire && ITeam.IsSame( Owner, entity ) )

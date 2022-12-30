@@ -12,11 +12,11 @@ partial class ArenaWaitingForPlayers : Panel
 		SetClass( "visible", ShouldDraw() );
 		if ( !IsVisible ) return;
 
-		SetClass( "red", ((TFPlayer)Local.Pawn).Team == TFTeam.Red );
-		SetClass( "blue", ((TFPlayer)Local.Pawn).Team == TFTeam.Blue );
+		SetClass( "red", ((TFPlayer)Sandbox.Game.LocalPawn).Team == TFTeam.Red );
+		SetClass( "blue", ((TFPlayer)Sandbox.Game.LocalPawn).Team == TFTeam.Blue );
 
 		// Move the arena player count down if in specator mode.
-		SetClass( "if-spectator", ((TFPlayer)Local.Pawn).Team == TFTeam.Spectator );
+		SetClass( "if-spectator", ((TFPlayer)Sandbox.Game.LocalPawn).Team == TFTeam.Spectator );
 	}
 
 	public bool ShouldDraw()

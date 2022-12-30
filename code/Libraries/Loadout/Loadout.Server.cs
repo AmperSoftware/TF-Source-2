@@ -19,7 +19,7 @@ partial class Loadout
 	[ConCmd.Server( "send_loadout" )]
 	public static void OnClientTransmit( string data )
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		var client = ConsoleSystem.Caller;
 		if ( client == null )
@@ -68,7 +68,7 @@ partial class Loadout
 	/// </summary>
 	public void RequestDataFromClient( Action<bool> callback )
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		LoadoutAvailable += ( success ) => callback( success );
 		RequestDataFromClient();
@@ -79,7 +79,7 @@ partial class Loadout
 	/// </summary>
 	public void RequestDataFromClient()
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 		OnServerRequest( To.Single( Client ) );
 	}
 }

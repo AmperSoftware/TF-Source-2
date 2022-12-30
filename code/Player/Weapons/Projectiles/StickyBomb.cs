@@ -77,14 +77,14 @@ public partial class StickyBomb : TFProjectile
 	[ClientRpc]
 	public void DeployEffects()
 	{
-//		DeleteTrails();
+		//		DeleteTrails();
 		Trail = Particles.Create( $"particles/stickybomb/stickybomb_pulse_{Team.GetName()}.vpcf", this );
 	}
 
 #if false
 	public override void DeleteTrails( bool immediate = false )
 	{
-		if ( !IsClient )
+		if ( !Game.IsClient )
 			return;
 
 		Trail?.Destroy( immediate );
@@ -100,7 +100,7 @@ public partial class StickyBomb : TFProjectile
 
 	public void Fizzle()
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		// TODO: Particles?

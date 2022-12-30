@@ -1,5 +1,5 @@
 using Sandbox;
-using SandboxEditor;
+using Editor;
 
 namespace TFS2;
 
@@ -8,9 +8,9 @@ namespace TFS2;
 /// this is used to create the Resupply Lockers, seen in the spawn rooms.
 /// </summary>
 [Library( "tf_func_regenerate" )]
-[Title("Resupply Zone")]
-[Category("Gameplay")]
-[Icon("checkroom")]
+[Title( "Resupply Zone" )]
+[Category( "Gameplay" )]
+[Icon( "checkroom" )]
 [Solid]
 [HammerEntity]
 partial class RegenerateZone : BaseTrigger
@@ -36,13 +36,13 @@ partial class RegenerateZone : BaseTrigger
 
 	public override void Touch( Entity other )
 	{
-		if ( !IsServer ) 
+		if ( !Game.IsServer )
 			return;
 
-		if ( other is not TFPlayer player ) 
+		if ( other is not TFPlayer player )
 			return;
 
-		if ( !CanRegenerate( player ) ) 
+		if ( !CanRegenerate( player ) )
 			return;
 
 		Regenerate( player );
@@ -51,7 +51,7 @@ partial class RegenerateZone : BaseTrigger
 	public bool CanRegenerate( TFPlayer player )
 	{
 		// Can't regenerate player of other team.
-		if ( !Team.Is( player.Team ) ) 
+		if ( !Team.Is( player.Team ) )
 			return false;
 
 		// Can't regenerate player that regenerated recently.

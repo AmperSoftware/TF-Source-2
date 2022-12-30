@@ -37,21 +37,26 @@ partial class TFWeaponBase
 		var b = Math.Clamp( cl_crosshair_color_b, 0, 255 ) / 255;
 		var a = Math.Clamp( cl_crosshair_alpha, 0, 255 ) / 255;
 		var color = new Color( r, g, b, a );
+		
+		var mat = Material.UI.Basic;
+		var tex = Texture.Load( FileSystem.Mounted, Util.JPGToPNG( path ) );
+		// TODO: Render crosshair again
 
-		var draw = Render.Draw2D;
-		draw.Material = Material.UI.Basic;
-		draw.Texture = Texture.Load( FileSystem.Mounted, Util.JPGToPNG( path ) );
-		draw.Color = color;
-		draw.Rect( x, y, imageSize, imageSize );
+		Rect size = new( x, y, imageSize, imageSize );
+		//Vertex
+		Graphics.DrawQuad( size, mat, color);
+
+		//draw.Rect( x, y, imageSize, imageSize );
 	}
 
 	public virtual bool ShouldDrawCrosshair() => true;
 	public virtual float CrosshairScale() => 1;
 }
 
-public static class RenderExtensions
-{
-	public static void Rect( this Render.Render2D draw, float x, float y, float width, float height )
+/*
+	Kept to help with future crosshair implementation
+
+public static void Rect( this Render.Render2D draw, float x, float y, float width, float height )
 	{
 		var lt = new Vector2( x, y );
 		var ltUv = new Vector2( 0, 0 );
@@ -61,7 +66,6 @@ public static class RenderExtensions
 		var lbUv = new Vector2( 0, 1 );
 		var rb = new Vector2( x + width, y + height );
 		var rbUv = new Vector2( 1, 1 );
-
 		draw.MeshStart();
 		var color = draw.Color;
 		draw.AddVertex( in lt, in color, in ltUv );
@@ -69,15 +73,12 @@ public static class RenderExtensions
 		draw.AddVertex( in rt, in color, rtUv );
 		color = draw.Color;
 		draw.AddVertex( in lb, in color, lbUv );
-
-
 		color = draw.Color;
 		draw.AddVertex( in rt, in color, rtUv );
 		color = draw.Color;
 		draw.AddVertex( in lb, in color, lbUv );
 		color = draw.Color;
 		draw.AddVertex( in rb, in color, rbUv );
-
 		draw.MeshEnd();
 	}
-}
+*/
